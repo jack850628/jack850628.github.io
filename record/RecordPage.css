@@ -180,14 +180,13 @@ Special classes
 }
 #introduce_page > div > :last-child > .introduce_img{
   position: relative;
-  z-index: 0;
   top :0%;
   width: 100%;
   height: 40%;
 }
 #introduce_page > div > :last-child > .introduce_title{
   display: table-row;
-  width: 100%;
+  background-color: rgb(255, 255, 255);
 }
 #introduce_page > div > :last-child > .introduce_title .title_icon{
   display: table-cell;
@@ -195,12 +194,13 @@ Special classes
   padding-left: 10px;
 }
 #introduce_page > div > :last-child > .introduce_title .title_icon img{
-  top: -50px;
   position: relative;
+  top: -50px;
 }
 #introduce_page > div > :last-child > .introduce_title .title_text{
   display: table-cell;
   vertical-align: top;
+  width: 100%;
 }
 #introduce_page > div > :last-child > .introduce_title .title_text h1{
   margin: 0px;
@@ -208,4 +208,6 @@ Special classes
 #introduce_page > div > :last-child > .introduce_content{
   position: relative;
   border-left: 10px rgba(255, 255, 255, 0) solid;
+  background-color: rgb(255, 255, 255);
+  height: 100%;
 }
