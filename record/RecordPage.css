@@ -148,7 +148,8 @@ Special classes
   position: relative;
   z-index: 3;
   /*top: -1%;*/
- /*right: -98%;*/
+  /*right: -98%;*/
+  right: -96%;
   height: 30px;
   width: 30px;
   border-radius: 50%;
