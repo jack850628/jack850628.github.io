@@ -1,0 +1,205 @@
+*{
+    box-sizing: border-box;
+  }
+  body{
+    margin: 0.8;
+    font:   16px/1.3 'Roboto', sans-serif;
+  }
+  h1, h2{
+    font-weight:200;
+  }
+
+  .title{
+    display: table-row;
+  }
+  .title > *{
+    display: table-cell;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+  }
+  .avatar{
+    padding-right: 30px;
+  }
+  .avatar img{
+    border-radius: 50%;
+  }
+  .title_text{
+  }
+  .grid{
+    text-align: center;
+    background: rgba(0,0,255,0.05);
+  }
+  
+  /* Material Design Lists - by Roko CB
+   - https://www.google.com/design/spec/components/lists.html
+   - http://stackoverflow.com/a/33312676/383904
+  */
+  
+  /*
+  Material Design - Icons
+  */
+  
+  [class^=mad-icon-]{
+    display: inline-block;
+    vertical-align: top;
+    /*border-radius: 50%;*/
+    background: 50% / cover;
+    /*color: #fff;*/
+  }
+  .mad-icon-24{
+    width:  24px;
+    height: 24px;
+  }
+  .mad-icon-32{
+    width:  32px;
+    height: 32px;
+  }
+  .mad-icon-40{
+    width:  40px;
+    height: 40px;
+  }
+  .language_img,#introduce_page .introduce_title .title_text img{
+    vertical-align: middle;
+  }
+  
+  
+  /*
+  Material Design - Lists
+  */
+  
+  ul.mad-list{
+    display: table;
+    width: 100%;
+    padding: 8px 0; /* 8 padding T/B */
+    margin: 0;
+    list-style: none;
+  }
+  ul.mad-list .interval{
+    height: 2px;
+  }
+  ul.mad-list li:not(.interval){
+    display: table-row;
+    height: 48px; /* that's actually min-height for rows */
+    cursor: pointer;
+  }
+  ul.mad-list li > *{
+    /* Align always to middle */
+    display: table-cell;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+  }
+  ul.mad-list li > *:first-child{
+    /* Whoever is the first child it needs 16px left space */
+    padding-left: 16px;
+    background: rgba(194, 197, 194, 0.171);
+  }
+  ul.mad-list li > *:last-child{
+    /* Whoever is the last child it needs 16 right space */
+    padding-right: 16px;
+  }
+  ul.mad-list .mad-list-icon{
+    /* Always left-align! Don't center icons */
+    width: 72px; /* 72-16 but we already use box-sizing */
+  }
+  ul.mad-list .mad-list-text{
+    background: rgba(0,0,255,0.05);
+  }
+  ul.mad-list .mad-list-icon-secundary{
+    /* Secundary actions will have already 16 right padding 
+    since it's :last-child but it needs also a left 16*/
+    padding-left: 16px;
+    width: 1px; /* Always h-center align content */
+    text-align: center; /* Just to make sure if we use combinations of larger icons */
+    background: rgba(255,0,255,0.05)
+  }
+  
+ /*
+Special classes
+*/
+.border-bottom{
+    border-bottom:1px solid rgba(0,0,0,0.1);
+}
+
+#introduce_page{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(155, 152, 152,0.5);
+  transition: all 0.3s;
+  display: none;
+  opacity: 0;
+}
+#introduce_page > div{
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  height: 90%;
+  width: 80%;
+  background-color: rgb(255, 255, 255);
+  /*overflow-y: scroll;*/
+}
+#introduce_page #close{
+  position: relative;
+  z-index: 3;
+  top: -1%;
+  right: -98%;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  border: 3px rgb(228, 226, 204) solid;
+  background-color: rgb(0, 0, 0);
+  cursor: pointer;
+}
+#introduce_page #close::before,#introduce_page #close::after{
+  position: absolute;
+  content: "";
+  top :45%;
+  width: 85%;
+  border: 2px rgb(255, 255, 255) solid;
+  border-radius: 2px;
+  transform: rotate(45deg);
+}
+#introduce_page #close::before{
+  transform: rotate(45deg);
+}
+#introduce_page #close::after{
+  transform: rotate(-45deg);
+}
+
+#introduce_page #introduce_img{
+  position: absolute;
+  z-index: 0;
+  background-image: url(https://raw.githubusercontent.com/jack850628/WebPageYouTubeLinkPlayer/master/demo.jpg);
+  top :0%;
+  width: 100%;
+  height: 40%;
+}
+#introduce_page .introduce_title{
+  position: relative;
+  border: 10px rgba(255, 255, 255, 0) solid;
+  top: 30%;
+  width: 100%;
+}
+#introduce_page .introduce_title .title_icon{
+  position: absolute;
+  top: -30%;
+}
+#introduce_page .introduce_title .title_text{
+  position: relative;
+  display: inline;
+  top: 30px;
+  left: 130px;
+}
+#introduce_page .introduce_title .title_text h1{
+  margin: 0px;
+}
+#introduce_page .introduce_content{
+  position: relative;
+  border: 10px rgba(255, 255, 255, 0) solid;
+  top: 32%;
+}
