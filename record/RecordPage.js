@@ -146,12 +146,12 @@ var workItems=[
 var workList=document.querySelector("#work_list");
 var closeButton=document.querySelector("#close");
 var introducePage=document.querySelector("#introduce_page");
-introducePage.introduceImage=document.querySelector("#introduce_page #introduce_img");
-introducePage.titleIcon=document.querySelector("#introduce_page .introduce_title .title_icon img");
-introducePage.titleText=document.querySelector("#introduce_page .introduce_title .title_text h1");
-introducePage.titleLanguage=document.querySelector("#introduce_page .introduce_title .title_text img");
-introducePage.createDate=document.querySelector("#introduce_page .introduce_title .title_text span");
-introducePage.introduceContent=document.querySelector("#introduce_page .introduce_content");
+introducePage.introduceImage=document.querySelector("#introduce_page > div > :last-child > .introduce_img");
+introducePage.titleIcon=document.querySelector("#introduce_page > div > :last-child > .introduce_title .title_icon img");
+introducePage.titleText=document.querySelector("#introduce_page > div > :last-child > .introduce_title .title_text h1");
+introducePage.titleLanguage=document.querySelector("#introduce_page > div > :last-child > .introduce_title .title_text img");
+introducePage.createDate=document.querySelector("#introduce_page > div > :last-child > .introduce_title .title_text span");
+introducePage.introduceContent=document.querySelector("#introduce_page > div > :last-child > .introduce_content");
 
 closeButton.onclick=(evn)=>{
     introducePage.style.opacity=0;

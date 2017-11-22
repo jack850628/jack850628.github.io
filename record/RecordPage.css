@@ -141,14 +141,12 @@ Special classes
   height: 90%;
   width: 80%;
   background-color: rgb(255, 255, 255);
-  overflow-y: scroll;
-  overflow-x: hidden;
 }
 #introduce_page #close{
   position: relative;
   z-index: 3;
-  /*top: -1%;*/
-  /*right: -98%;*/
+  top: -1%;
+  right: -98%;
   height: 30px;
   width: 30px;
   border-radius: 50%;
@@ -172,35 +170,42 @@ Special classes
   transform: rotate(-45deg);
 }
 
-#introduce_page #introduce_img{
+#introduce_page > div > :last-child{
   position: absolute;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  top: 0%;
+  width: 100%;
+  height: 100%;
+}
+#introduce_page > div > :last-child > .introduce_img{
+  position: relative;
   z-index: 0;
-  background-image: url(https://raw.githubusercontent.com/jack850628/WebPageYouTubeLinkPlayer/master/demo.jpg);
   top :0%;
   width: 100%;
   height: 40%;
 }
-#introduce_page .introduce_title{
-  position: relative;
-  border: 10px rgba(255, 255, 255, 0) solid;
-  top: 30%;
+#introduce_page > div > :last-child > .introduce_title{
+  display: table-row;
   width: 100%;
 }
-#introduce_page .introduce_title .title_icon{
-  position: absolute;
-  top: -30%;
+#introduce_page > div > :last-child > .introduce_title .title_icon{
+  display: table-cell;
+  padding-right: 20px;
+  padding-left: 10px;
 }
-#introduce_page .introduce_title .title_text{
+#introduce_page > div > :last-child > .introduce_title .title_icon img{
+  top: -50px;
   position: relative;
-  display: inline;
-  top: 30px;
-  left: 130px;
 }
-#introduce_page .introduce_title .title_text h1{
+#introduce_page > div > :last-child > .introduce_title .title_text{
+  display: table-cell;
+  vertical-align: top;
+}
+#introduce_page > div > :last-child > .introduce_title .title_text h1{
   margin: 0px;
 }
-#introduce_page .introduce_content{
+#introduce_page > div > :last-child > .introduce_content{
   position: relative;
-  border: 10px rgba(255, 255, 255, 0) solid;
-  top: 32%;
+  border-left: 10px rgba(255, 255, 255, 0) solid;
 }
