@@ -38,7 +38,7 @@ var workItems=[
         workTitle:"AShell",
         workContext:"AShell腳本語言",
         workHypeLink:"https://github.com/jack850628/AShell",
-        introduceImage:"https://raw.githubusercontent.com/jack850628/AShell/master/AShell_icon.ico",
+        introduceImage:"https://raw.githubusercontent.com/jack850628/AShell/master/AShell_LOGO2.png",
         createDate:"2016-01-14",
         languageType:languageTypes.JAVA
     },{
@@ -46,7 +46,7 @@ var workItems=[
         workTitle:"AShell_ComLine",
         workContext:"AShell腳本語言Android版",
         workHypeLink:"https://github.com/jack850628/AShell_ComLine",
-        introduceImage:"https://raw.githubusercontent.com/jack850628/AShell/master/AShell_icon.ico",
+        introduceImage:"https://raw.githubusercontent.com/jack850628/AShell/master/AShell_LOGO2.png",
         createDate:"2015-05-05",
         languageType:languageTypes.JAVA
     },
