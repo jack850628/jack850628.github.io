@@ -1,7 +1,7 @@
 var languageTypes={
     JAVA:{
         languageName:"Java",
-        languageIcon:"java.png"
+        languageIcon:"Java.png"
     },
     JAVA_SCRIPT:{
         languageName:"JavaScript",
