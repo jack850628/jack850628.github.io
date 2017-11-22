@@ -141,13 +141,14 @@ Special classes
   height: 90%;
   width: 80%;
   background-color: rgb(255, 255, 255);
-  /*overflow-y: scroll;*/
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 #introduce_page #close{
   position: relative;
   z-index: 3;
-  top: -1%;
-  right: -98%;
+  /*top: -1%;*/
+ /*right: -98%;*/
   height: 30px;
   width: 30px;
   border-radius: 50%;
