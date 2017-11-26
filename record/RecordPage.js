@@ -168,7 +168,7 @@ for(let item of workItems){
             introducePage.style.display="block";
             setTimeout(()=>{
                 introducePage.style.opacity=1;
-            },300);
+            },1);
         }
     };
 
