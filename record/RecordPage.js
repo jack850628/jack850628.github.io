@@ -40,7 +40,6 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/AShell",
         introduceImage:"https://raw.githubusercontent.com/jack850628/AShell/master/AShell_LOGO2.png",
         createDate:"2016-01-14",
-        introduceContent:"AShell腳本語言",
         languageType:languageTypes.JAVA
     },{
         workImg:"https://raw.githubusercontent.com/jack850628/AShell/master/AShell_icon.ico",
@@ -49,7 +48,6 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/AShell_ComLine",
         introduceImage:"https://raw.githubusercontent.com/jack850628/AShell/master/AShell_LOGO2.png",
         createDate:"2015-05-05",
-        introduceContent:"AShell腳本語言Android版",
         languageType:languageTypes.JAVA
     },
     {
@@ -59,7 +57,6 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/FloatWindow",
         introduceImage:"https://raw.githubusercontent.com/jack850628/FloatWindow/master/Demonstration.png",
         createDate:"2017-08-21",
-        introduceContent:'Android上的浮動視窗小工具<div><br></div><div>製作原因:</div><div><span style="font-family: Helvetica, Arial, sans-serif; color: rgb(29, 33, 41); font-size: 15px;">用手聽youtube音樂時只要一關閉螢幕或切換程式播</span><wbr style="color: rgb(29, 33, 41); font-family: Helvetica, Arial, sans-serif; font-size: 15px;"><span class="word_break" style="display: inline-block; font-family: Helvetica, Arial, sans-serif; color: rgb(29, 33, 41); font-size: 15px;"></span><span style="font-family: Helvetica, Arial, sans-serif; color: rgb(29, 33, 41); font-size: 15px;">放就會中斷，就算用手機瀏覽器開網頁版的也一樣，所以我</span><wbr style="color: rgb(29, 33, 41); font-family: Helvetica, Arial, sans-serif; font-size: 15px;"><span class="word_break" style="display: inline-block; font-family: Helvetica, Arial, sans-serif; color: rgb(29, 33, 41); font-size: 15px;"></span><span style="font-family: Helvetica, Arial, sans-serif; color: rgb(29, 33, 41); font-size: 15px;">就寫了一個浮動視窗APP來解決這個問題。</span><br></div>',
         languageType:languageTypes.JAVA
     },
     {
@@ -69,7 +66,6 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/BusBT",
         introduceImage:"https://raw.githubusercontent.com/jack850628/BusBT/master/res/drawable-xxhdpi/bus.png",
         createDate:"2014-08-09",
-        introduceContent:"Android上的公車報站系統模擬器",
         languageType:languageTypes.JAVA
     },
     {
@@ -79,7 +75,6 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/StartMusic",
         introduceImage:"https://raw.githubusercontent.com/jack850628/StartMusic/master/res/drawable-hdpi/startmusic.png",
         createDate:"2014-11-11",
-        introduceContent:"讓Android手機也可以像Windows一樣有開機音效的app",
         languageType:languageTypes.JAVA
     },
     {
@@ -89,7 +84,6 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/KeelungStart",
         introduceImage:"https://raw.githubusercontent.com/jack850628/KeelungStart/master/res/drawable-xhdpi/ks.png",
         createDate:"2013-11-10",
-        introduceContent:"基隆旅遊app",
         languageType:languageTypes.JAVA
     },
     {
@@ -99,7 +93,6 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/webGobang",
         introduceImage:"https://raw.githubusercontent.com/jack850628/webGobang/master/demo.PNG",
         createDate:"2017-08-09",
-        introduceContent:"網頁五子棋",
         languageType:languageTypes.JAVA_SCRIPT
     },
     {
@@ -109,7 +102,6 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/FileDownloadServer",
         introduceImage:"https://raw.githubusercontent.com/jack850628/FileDownloadServer/master/demo.PNG",
         createDate:"2017-05-15",
-        introduceContent:"簡易型檔案下載伺服器",
         languageType:languageTypes.C_SHARP
     },
     {
@@ -119,7 +111,6 @@ var workItems=[
         workHypeLink:"http://lcm-ap.duckdns.org/house",
         introduceImage:"HousePricMap.PNG",
         createDate:"2017-04-22",
-        introduceContent:"線上房屋實價登錄查詢地圖",
         languageType:languageTypes.C_SHARP
     },
     {
@@ -129,7 +120,6 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/WebPageYouTubeLinkPlayer",
         introduceImage:"https://raw.githubusercontent.com/jack850628/WebPageYouTubeLinkPlayer/master/demo.jpg",
         createDate:"2017-04-19",
-        introduceContent:"抓取網頁上的YouTube連結並自動依序播放",
         languageType:languageTypes.C_SHARP
     },
     {
@@ -139,18 +129,19 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/KanColle_Auto_Expedition_Script",
         introduceImage:"https://raw.githubusercontent.com/jack850628/KanColle_Auto_Expedition_Script/master/demo1.png",
         createDate:"2015-12-09",
-        introduceContent:"艦隊收藏自動遠征腳本",
         languageType:languageTypes.ASHELL
     }
 ];
+var introduceContentPages=document.querySelectorAll(".introduce_content_page");
 var workList=document.querySelector("#work_list");
 var closeButton=document.querySelector("#close");
 var introducePage=document.querySelector("#introduce_page");
 introducePage.introduceImage=document.querySelector("#introduce_page > div > :last-child");
 introducePage.titleIcon=document.querySelector("#introduce_page > div > :last-child > .introduce_title .title_icon img");
-introducePage.titleText=document.querySelector("#introduce_page > div > :last-child > .introduce_title .title_text h1");
-introducePage.titleLanguage=document.querySelector("#introduce_page > div > :last-child > .introduce_title .title_text img");
-introducePage.createDate=document.querySelector("#introduce_page > div > :last-child > .introduce_title .title_text span");
+introducePage.titleText=document.querySelector("#introduce_page > div > :last-child > .introduce_title .title_text #title");
+introducePage.workHypeLink=document.querySelector("#introduce_page > div > :last-child > .introduce_title .title_text #work_hype_link");
+introducePage.titleLanguage=document.querySelector("#introduce_page > div > :last-child > .introduce_title .title_text #language_icon");
+introducePage.createDate=document.querySelector("#introduce_page > div > :last-child > .introduce_title .title_text #date");
 introducePage.introduceContent=document.querySelector("#introduce_page > div > :last-child > .introduce_content");
 
 closeButton.onclick=(evn)=>{
@@ -160,17 +151,20 @@ closeButton.onclick=(evn)=>{
     },300);
 };
 
+let i=0;
 for(let item of workItems){
     let li=document.createElement("li");
+    let index=i++;
     li.onclick=(e)=>{
         if(e.target.tagName.toUpperCase()!=="A"){
             introducePage.introduceImage.style.backgroundImage=`url(${item.introduceImage})`;
             introducePage.titleIcon.src=item.workImg;
             introducePage.titleText.innerText=item.workTitle;
+            introducePage.workHypeLink.href=item.workHypeLink;
             introducePage.titleLanguage.src=item.languageType.languageIcon;
             introducePage.titleLanguage.alt=item.languageType.languageName;
             introducePage.createDate.innerText=item.createDate;
-            introducePage.introduceContent.innerHTML=item.introduceContent;
+            introducePage.introduceContent.innerHTML=introduceContentPages[index].innerHTML;
             introducePage.style.display="block";
             setTimeout(()=>{
                 introducePage.style.opacity=1;

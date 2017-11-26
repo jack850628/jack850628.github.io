@@ -161,7 +161,6 @@ Special classes
   width: 85%;
   border: 2px rgb(255, 255, 255) solid;
   border-radius: 2px;
-  transform: rotate(45deg);
 }
 #introduce_page #close::before{
   transform: rotate(45deg);
@@ -202,12 +201,17 @@ Special classes
   vertical-align: top;
   width: 100%;
 }
-#introduce_page > div > :last-child > .introduce_title .title_text h1{
+#introduce_page > div > :last-child > .introduce_title .title_text #title{
   margin: 0px;
+  font-size: 1cm;
+  font-weight:100;
 }
 #introduce_page > div > :last-child > .introduce_content{
   position: relative;
   border-left: 10px rgba(255, 255, 255, 0) solid;
   background-color: rgb(255, 255, 255);
-  height: 100%;
+  min-height: 100%;
+}
+.introduce_content_page{
+  display: none;
 }
