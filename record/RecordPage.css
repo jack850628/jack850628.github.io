@@ -30,6 +30,32 @@
     text-align: center;
     background: rgba(0,0,255,0.05);
   }
+
+  .time_line{
+    position: relative;
+    border-left: 3px rgb(14, 14, 14) solid;
+    left: 10px;
+    padding-left: 20px;
+  }
+  .time_line > h4{
+    position: relative;
+    left: -10px;
+    margin: 0px;
+  }
+  #time > p{
+    margin: 0px;
+  }
+  .time_line::before{
+    position: absolute;
+    content: "";
+    border-radius: 50%;
+    height: 8px;
+    width: 8px;
+    background: rgb(255, 255, 255);
+    border: 2px rgb(14, 14, 14) solid;
+    top: 3px;
+    left: -7.5px;
+  }
   
   /* Material Design Lists - by Roko CB
    - https://www.google.com/design/spec/components/lists.html

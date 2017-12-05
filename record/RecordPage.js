@@ -39,7 +39,7 @@ var workItems=[
         workContent:"AShell腳本語言",
         workHypeLink:"https://github.com/jack850628/AShell",
         introduceImage:"https://raw.githubusercontent.com/jack850628/AShell/master/AShell_LOGO2.png",
-        createDate:"2016-01-14",
+        createDate:"2015-12-05",
         languageType:languageTypes.JAVA
     },{
         workImg:"https://raw.githubusercontent.com/jack850628/AShell/master/AShell_icon.ico",
@@ -80,7 +80,7 @@ var workItems=[
     {
         workImg:"https://raw.githubusercontent.com/jack850628/KeelungStart/master/res/drawable-xhdpi/ks.png",
         workTitle:"KeelungStart",
-        workContent:"基隆旅遊app",
+        workContent:"基隆旅遊景點介紹app",
         workHypeLink:"https://github.com/jack850628/KeelungStart",
         introduceImage:"https://raw.githubusercontent.com/jack850628/KeelungStart/master/res/drawable-xhdpi/ks.png",
         createDate:"2013-11-10",
@@ -98,7 +98,7 @@ var workItems=[
     {
         workImg:"https://raw.githubusercontent.com/jack850628/FileDownloadServer/master/demo.PNG",
         workTitle:"File Download Server",
-        workContent:"簡易型檔案下載伺服器 ",
+        workContent:"簡易型檔案下載伺服器",
         workHypeLink:"https://github.com/jack850628/FileDownloadServer",
         introduceImage:"https://raw.githubusercontent.com/jack850628/FileDownloadServer/master/demo.PNG",
         createDate:"2017-05-15",
@@ -116,7 +116,7 @@ var workItems=[
     {
         workImg:"https://raw.githubusercontent.com/jack850628/WebPageYouTubeLinkPlayer/master/demo.jpg",
         workTitle:"Web Page YouTube Link Player",
-        workContent:"抓取網頁上的YouTube連結並自動依序播放 ",
+        workContent:"抓取網頁上的YouTube連結並自動依序播放",
         workHypeLink:"https://github.com/jack850628/WebPageYouTubeLinkPlayer",
         introduceImage:"https://raw.githubusercontent.com/jack850628/WebPageYouTubeLinkPlayer/master/demo.jpg",
         createDate:"2017-04-19",
