@@ -31,6 +31,22 @@
     background: rgba(0,0,255,0.05);
   }
 
+  @media only screen and (max-width:550px) {
+    #max-550{
+      display: none;
+    }
+    #min-550{
+      display: block;
+    }
+  }
+  @media only screen and (min-width:550px) {
+    #max-550{
+      display: block;
+    }
+    #min-550{
+      display: none;
+    }
+  }
   .time_line{
     position: relative;
     border-left: 3px rgb(14, 14, 14) solid;
