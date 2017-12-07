@@ -82,7 +82,7 @@ var workItems=[
         workTitle:"KeelungStart",
         workContent:"基隆旅遊景點介紹app",
         workHypeLink:"https://github.com/jack850628/KeelungStart",
-        introduceImage:"https://raw.githubusercontent.com/jack850628/KeelungStart/master/res/drawable-xhdpi/ks.png",
+        introduceImage:"./KS/Screenshot_1512658472.png",
         createDate:"2013-11-10",
         languageType:languageTypes.JAVA
     },
@@ -93,6 +93,15 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/webGobang",
         introduceImage:"https://raw.githubusercontent.com/jack850628/webGobang/master/demo.PNG",
         createDate:"2017-08-09",
+        languageType:languageTypes.JAVA_SCRIPT
+    },
+    {
+        workImg:"",
+        workTitle:"foodOrder",
+        workContent:"通用美食街點系統",
+        workHypeLink:"",
+        introduceImage:"",
+        createDate:"2017-04-14",
         languageType:languageTypes.JAVA_SCRIPT
     },
     {
