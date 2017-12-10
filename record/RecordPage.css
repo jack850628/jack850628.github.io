@@ -57,6 +57,7 @@
     position: relative;
     left: -10px;
     margin: 0px;
+    /*opacity: 0;*/
   }
   #time > p{
     margin: 0px;
@@ -218,6 +219,9 @@ Special classes
   top: 0%;
   width: 100%;
   height: 100%;
+}
+#introduce_page > div > :last-child > .introduce_title .title_text #language_icons{
+  display: inline;
 }
 #introduce_page > div > :last-child > .introduce_img{
   position: relative;

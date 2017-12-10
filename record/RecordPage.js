@@ -40,7 +40,7 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/AShell",
         introduceImage:"https://raw.githubusercontent.com/jack850628/AShell/master/AShell_LOGO2.png",
         createDate:"2015-12-05",
-        languageType:languageTypes.JAVA
+        languageType:[languageTypes.JAVA,languageTypes.CPP]
     },{
         workImg:"https://raw.githubusercontent.com/jack850628/AShell/master/AShell_icon.ico",
         workTitle:"AShell_ComLine",
@@ -48,7 +48,7 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/AShell_ComLine",
         introduceImage:"https://raw.githubusercontent.com/jack850628/AShell/master/AShell_LOGO2.png",
         createDate:"2015-05-05",
-        languageType:languageTypes.JAVA
+        languageType:[languageTypes.JAVA,languageTypes.CPP]
     },
     {
         workImg:"https://raw.githubusercontent.com/jack850628/FloatWindow/master/app/src/main/res/drawable/icom.png",
@@ -57,7 +57,7 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/FloatWindow",
         introduceImage:"https://raw.githubusercontent.com/jack850628/FloatWindow/master/Demonstration.png",
         createDate:"2017-08-21",
-        languageType:languageTypes.JAVA
+        languageType:[languageTypes.JAVA]
     },
     {
         workImg:"https://raw.githubusercontent.com/jack850628/BusBT/master/res/drawable-xxhdpi/bus.png",
@@ -66,7 +66,7 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/BusBT",
         introduceImage:"https://raw.githubusercontent.com/jack850628/BusBT/master/res/drawable-xxhdpi/bus.png",
         createDate:"2014-08-09",
-        languageType:languageTypes.JAVA
+        languageType:[languageTypes.JAVA]
     },
     {
         workImg:"https://raw.githubusercontent.com/jack850628/StartMusic/master/res/drawable-hdpi/startmusic.png",
@@ -75,7 +75,7 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/StartMusic",
         introduceImage:"https://raw.githubusercontent.com/jack850628/StartMusic/master/res/drawable-hdpi/startmusic.png",
         createDate:"2014-11-11",
-        languageType:languageTypes.JAVA
+        languageType:[languageTypes.JAVA]
     },
     {
         workImg:"https://raw.githubusercontent.com/jack850628/KeelungStart/master/res/drawable-xhdpi/ks.png",
@@ -84,7 +84,7 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/KeelungStart",
         introduceImage:"./KS/Screenshot_1512658472.png",
         createDate:"2013-11-10",
-        languageType:languageTypes.JAVA
+        languageType:[languageTypes.JAVA]
     },
     {
         workImg:"https://raw.githubusercontent.com/jack850628/webGobang/master/demo.PNG",
@@ -93,7 +93,7 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/webGobang",
         introduceImage:"https://raw.githubusercontent.com/jack850628/webGobang/master/demo.PNG",
         createDate:"2017-08-09",
-        languageType:languageTypes.JAVA_SCRIPT
+        languageType:[languageTypes.JAVA_SCRIPT]
     },
     {
         workImg:"",
@@ -102,7 +102,7 @@ var workItems=[
         workHypeLink:"",
         introduceImage:"",
         createDate:"2017-04-14",
-        languageType:languageTypes.JAVA_SCRIPT
+        languageType:[languageTypes.JAVA_SCRIPT,languageTypes.PHP]
     },
     {
         workImg:"https://raw.githubusercontent.com/jack850628/FileDownloadServer/master/demo.PNG",
@@ -111,7 +111,7 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/FileDownloadServer",
         introduceImage:"https://raw.githubusercontent.com/jack850628/FileDownloadServer/master/demo.PNG",
         createDate:"2017-05-15",
-        languageType:languageTypes.C_SHARP
+        languageType:[languageTypes.C_SHARP]
     },
     {
         workImg:"HousePricMap.PNG",
@@ -120,7 +120,7 @@ var workItems=[
         workHypeLink:"http://lcm-ap.duckdns.org/house",
         introduceImage:"HousePricMap.PNG",
         createDate:"2017-04-22",
-        languageType:languageTypes.C_SHARP
+        languageType:[languageTypes.JAVA_SCRIPT,languageTypes.C_SHARP]
     },
     {
         workImg:"https://raw.githubusercontent.com/jack850628/WebPageYouTubeLinkPlayer/master/demo.jpg",
@@ -129,7 +129,7 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/WebPageYouTubeLinkPlayer",
         introduceImage:"https://raw.githubusercontent.com/jack850628/WebPageYouTubeLinkPlayer/master/demo.jpg",
         createDate:"2017-04-19",
-        languageType:languageTypes.C_SHARP
+        languageType:[languageTypes.C_SHARP]
     },
     {
         workImg:"https://raw.githubusercontent.com/jack850628/KanColle_Auto_Expedition_Script/master/demo1.png",
@@ -138,7 +138,7 @@ var workItems=[
         workHypeLink:"https://github.com/jack850628/KanColle_Auto_Expedition_Script",
         introduceImage:"https://raw.githubusercontent.com/jack850628/KanColle_Auto_Expedition_Script/master/demo1.png",
         createDate:"2015-12-09",
-        languageType:languageTypes.ASHELL
+        languageType:[languageTypes.ASHELL,languageTypes.CPP]
     }
 ];
 var introduceContentPages=document.querySelectorAll(".introduce_content_page");
@@ -149,7 +149,7 @@ introducePage.introduceImage=document.querySelector("#introduce_page > div > :la
 introducePage.titleIcon=document.querySelector("#introduce_page > div > :last-child > .introduce_title .title_icon img");
 introducePage.titleText=document.querySelector("#introduce_page > div > :last-child > .introduce_title .title_text #title");
 introducePage.workHypeLink=document.querySelector("#introduce_page > div > :last-child > .introduce_title .title_text #work_hype_link");
-introducePage.titleLanguage=document.querySelector("#introduce_page > div > :last-child > .introduce_title .title_text #language_icon");
+introducePage.titleLanguage=document.querySelector("#introduce_page > div > :last-child > .introduce_title .title_text #language_icons");
 introducePage.createDate=document.querySelector("#introduce_page > div > :last-child > .introduce_title .title_text #date");
 introducePage.introduceContent=document.querySelector("#introduce_page > div > :last-child > .introduce_content");
 
@@ -170,8 +170,15 @@ for(let item of workItems){
             introducePage.titleIcon.src=item.workImg;
             introducePage.titleText.innerText=item.workTitle;
             introducePage.workHypeLink.href=item.workHypeLink;
-            introducePage.titleLanguage.src=item.languageType.languageIcon;
-            introducePage.titleLanguage.alt=item.languageType.languageName;
+            introducePage.titleLanguage.innerHTML="";
+            for(let language of item.languageType){
+                let languageIcon=document.createElement("img");
+                languageIcon.src=language.languageIcon;
+                languageIcon.width="40";
+                languageIcon.alt=language.languageName;
+                languageIcon.classList.add("language_img");
+                introducePage.titleLanguage.appendChild(languageIcon);
+            }
             introducePage.createDate.innerText=item.createDate;
             introducePage.introduceContent.innerHTML=introduceContentPages[index].innerHTML;
             introducePage.style.display="block";
@@ -200,12 +207,14 @@ for(let item of workItems){
     contextTitleHypeLink.text=item.workTitle;
     madListText.appendChild(contextTitleHypeLink);
 
-    let languageIcon=document.createElement("img");
-    languageIcon.src=item.languageType.languageIcon;
-    languageIcon.width="40";
-    languageIcon.alt=item.languageType.languageName;
-    languageIcon.classList.add("language_img");
-    madListText.appendChild(languageIcon);
+    for(let language of item.languageType){
+        let languageIcon=document.createElement("img");
+        languageIcon.src=language.languageIcon;
+        languageIcon.width="40";
+        languageIcon.alt=language.languageName;
+        languageIcon.classList.add("language_img");
+        madListText.appendChild(languageIcon);
+    }
 
     madListText.appendChild(document.createElement("br"));
 
