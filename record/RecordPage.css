@@ -57,7 +57,7 @@
     position: relative;
     left: -10px;
     margin: 0px;
-    /*opacity: 0;*/
+    opacity: 0;
   }
   #time > p{
     margin: 0px;
