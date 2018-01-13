@@ -98,8 +98,8 @@ var workItems=[
     {
         workImg:"",
         workTitle:"foodOrder",
-        workContent:"通用美食街點系統",
-        workHypeLink:"",
+        workContent:"通用美食街點系統(大學專題)",
+        workHypeLink:"https://foms.pada.tw/customerClint/menu.php?foodCourt=1",
         introduceImage:"",
         createDate:"2017-04-14",
         languageType:[languageTypes.JAVA_SCRIPT,languageTypes.PHP]
@@ -184,6 +184,7 @@ for(let item of workItems){
             introducePage.style.display="block";
             setTimeout(()=>{
                 introducePage.style.opacity=1;
+                introducePage.introduceImage.scroll(0,0);
             },1);
         }
     };
