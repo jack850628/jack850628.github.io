@@ -23,8 +23,6 @@
             background-color: #FFC107;
             z-index: 1;
             border-bottom-left-radius: 10px;
-            right: -238px;
-            top: -163px;
             transition: 1s;
         }
         #control_panel.show{
@@ -46,7 +44,7 @@
 <head>
     <meta charset="utf-8" />
     <title>彈力球</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
@@ -87,6 +85,8 @@
                 control_panel_show_buttom.style.transform = "rotate(135deg)";
             }
         });
+        document.styleSheets[0].cssRules[2].style.right = (34-control_panel_show_buttom.parentElement.offsetWidth)+'px';
+        document.styleSheets[0].cssRules[2].style.top = (30-control_panel_show_buttom.parentElement.offsetHeight)+'px';
 
         document.querySelector('#control_panel #start').addEventListener('click',async function(){
             ball_quantity = document.querySelector('#control_panel #ball_quantity').value;
