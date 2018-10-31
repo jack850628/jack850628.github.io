@@ -88,7 +88,7 @@
         document.styleSheets[0].cssRules[2].style.right = (34-control_panel_show_buttom.parentElement.offsetWidth)+'px';
         document.styleSheets[0].cssRules[2].style.top = (30-control_panel_show_buttom.parentElement.offsetHeight)+'px';
 
-        document.querySelector('#control_panel #start').addEventListener('click',async function(){
+        document.querySelector('#control_panel #start').addEventListener('click',function(){
             ball_quantity = document.querySelector('#control_panel #ball_quantity').value;
             ball_width = document.querySelector('#control_panel #ball_width').value;
             ball_height = document.querySelector('#control_panel #ball_height').value;
