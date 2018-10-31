@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        .ball{
+            position: absolute;
+            background-color: #9E9E9E;
+            width: 20px;
+            height: 20px;
+            border-radius: 10px;
+        }
+        body{
+            position: absolute;
+            background-color: #ffffff;
+            margin: 0px;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+        #control_panel{
+            position: absolute;
+            text-align: center;
+            padding: 7px;
+            background-color: #FFC107;
+            z-index: 1;
+            border-bottom-left-radius: 10px;
+            right: -238px;
+            top: -163px;
+            transition: 1s;
+        }
+        #control_panel.show{
+            right: 0px;
+            top: 0px;
+        }
+        #control_panel #but{
+            position: absolute;
+            width: 34px;
+            height: 30px;
+            bottom: 1px;
+            left: 2px;
+            font-size: 26px;
+            color: #ffffff;
+            transform: rotate(-45deg);
+        }
+    </style>
+<head>
+    <meta charset="utf-8" />
+    <title>彈力球</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div id="control_panel">
+        球的數量: <input type="text" id="ball_quantity">
+        <br>
+        <br>
+        球的寬: <input type="text" id="ball_width">
+        <br>
+        <br>
+        球的高: <input type="text" id="ball_height">
+        <br>
+        <br>
+        彈力衰減值: <input type="text" id="elastic_attenuation">
+        <br>
+        <br>
+        <button id="start">開始</button>
+        <i id="but" class="fa fa-arrow-left"></i>
+    </div>
+    <script>
+        var ball_width = 20,ball_height = 20;//球的大小
+        var elastic_attenuation = 0.02;//彈力衰減值
+        var ball_quantity = 30;//球的數量
+        var run_status = {runing: 0,stoping: 1,stoped: -1};
+        var balls = [];
+
+        document.querySelector('#control_panel #ball_quantity').value = ball_quantity;
+        document.querySelector('#control_panel #ball_width').value = ball_width;
+        document.querySelector('#control_panel #ball_height').value = ball_height;
+        document.querySelector('#control_panel #elastic_attenuation').value = elastic_attenuation;
+        var control_panel_show_buttom = document.querySelector('#control_panel #but');
+        control_panel_show_buttom.addEventListener('click',function(){
+            if(control_panel_show_buttom.parentElement.classList.contains('show')){
+                control_panel_show_buttom.parentElement.classList.remove('show');
+                control_panel_show_buttom.style.transform = "rotate(-45deg)";
+            }else{
+                control_panel_show_buttom.parentElement.classList.add('show');
+                control_panel_show_buttom.style.transform = "rotate(135deg)";
+            }
+        });
+
+        document.querySelector('#control_panel #start').addEventListener('click',async function(){
+            ball_quantity = document.querySelector('#control_panel #ball_quantity').value;
+            ball_width = document.querySelector('#control_panel #ball_width').value;
+            ball_height = document.querySelector('#control_panel #ball_height').value;
+            elastic_attenuation = document.querySelector('#control_panel #elastic_attenuation').value;
+            
+            run_status.now = run_status.stoping;
+            function restart(){
+                if(run_status.now != run_status.stoped){
+                    setTimeout(restart,1);
+                    return;
+                }
+                balls = [];
+                for(let i = 0;i < ball_quantity;i++){
+                    balls.push({
+                        b : new Ball(getRandom(0,document.body.offsetWidth-20),getRandom(0,document.body.offsetHeight-20)),
+                        v : new Point(getRandom(-0.7,0.7),getRandom(-0.7,0.7)),
+                        a : new Point(getRandom(-0.3,0.3),getRandom(-0.3,0.3))
+                    });
+                }
+                run_status.now = run_status.runing;
+                requestAnimationFrame(run);
+            }
+            setTimeout(restart,1);
+        });
+
+        class Point{
+            constructor(x,y){
+                this.x = x;
+                this.y = y;
+            }
+            add(point){
+                this.x += point.x;
+                this.y += point.y;
+            }
+        }
+        class Ball extends Point{
+            constructor(x,y){
+                super(x,y)
+                this.div = document.createElement('div');
+                this.div.classList.add('ball');
+                this.div.style.left = x+'px';
+                this.div.style.top = y+'px';
+                this.div.style.width = ball_width+'px';
+                this.div.style.height = ball_height+'px';
+                document.body.appendChild(this.div);
+            }
+            add(point){
+                super.add(point);
+                this.div.style.left = this.x+'px';
+                this.div.style.top = this.y+'px';
+            }
+        }
+        function getRandom(min,max){
+            return Math.floor(Math.random()*(max-min+1))+min;
+        };
+        for(let i = 0;i < ball_quantity;i++){
+            balls.push({
+                b : new Ball(getRandom(0,document.body.offsetWidth-20),getRandom(0,document.body.offsetHeight-20)),
+                v : new Point(getRandom(-0.7,0.7),getRandom(-0.7,0.7)),
+                a : new Point(getRandom(-0.3,0.3),getRandom(-0.3,0.3))
+            });
+        }
+        function run(){
+            for(let i of balls){
+                i.b.add(i.v);
+                i.v.add(i.a);
+
+                //乘上0.98可以讓球不會越彈越有力
+                if(0 > i.b.x) i.v.x = Math.abs(i.v.x) * (1 - elastic_attenuation)
+                if(0 > i.b.y) i.v.y = Math.abs(i.v.y) * (1 - elastic_attenuation)
+                if(document.body.offsetWidth < i.b.x+i.b.div.offsetWidth) i.v.x = -Math.abs(i.v.x) * (1 - elastic_attenuation)
+                if(document.body.offsetHeight < i.b.y+i.b.div.offsetHeight) i.v.y = -Math.abs(i.v.y) * (1 - elastic_attenuation)
+            }
+            if(run_status.now == run_status.runing)
+                requestAnimationFrame(run);
+            else{
+                for(let i of balls)
+                    i.b.div.remove();
+                run_status.now = run_status.stoped;
+            }
+        }
+        run_status.now = run_status.runing;
+        requestAnimationFrame(run);
+    </script>
+</body>
+</html>
