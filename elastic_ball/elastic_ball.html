@@ -61,6 +61,9 @@
         彈力衰減值: <input type="text" id="elastic_attenuation">
         <br>
         <br>
+        撞邊音效: <input type="checkbox" id="sound_switch">
+        <br>
+        <br>
         <button id="start">開始</button>
         <i id="but" class="fa fa-arrow-left"></i>
     </div>
@@ -71,11 +74,14 @@
         var run_status = {runing: 0,stoping: 1,stoped: -1};
         var balls = [];
 
+        var sound_switch = document.querySelector('#control_panel #sound_switch')
+        var control_panel_show_buttom = document.querySelector('#control_panel #but');
+        const sound_name = 'dance-kick.wav';
+
         document.querySelector('#control_panel #ball_quantity').value = ball_quantity;
         document.querySelector('#control_panel #ball_width').value = ball_width;
         document.querySelector('#control_panel #ball_height').value = ball_height;
         document.querySelector('#control_panel #elastic_attenuation').value = elastic_attenuation;
-        var control_panel_show_buttom = document.querySelector('#control_panel #but');
         control_panel_show_buttom.addEventListener('click',function(){
             if(control_panel_show_buttom.parentElement.classList.contains('show')){
                 control_panel_show_buttom.parentElement.classList.remove('show');
@@ -87,7 +93,7 @@
         });
         document.styleSheets[0].cssRules[2].style.right = (34-control_panel_show_buttom.parentElement.offsetWidth)+'px';
         document.styleSheets[0].cssRules[2].style.top = (30-control_panel_show_buttom.parentElement.offsetHeight)+'px';
-
+        
         document.querySelector('#control_panel #start').addEventListener('click',function(){
             ball_quantity = document.querySelector('#control_panel #ball_quantity').value;
             ball_width = document.querySelector('#control_panel #ball_width').value;
@@ -157,10 +163,24 @@
                 i.v.add(i.a);
 
                 //乘上0.98可以讓球不會越彈越有力
-                if(0 > i.b.x) i.v.x = Math.abs(i.v.x) * (1 - elastic_attenuation)
-                if(0 > i.b.y) i.v.y = Math.abs(i.v.y) * (1 - elastic_attenuation)
-                if(document.body.offsetWidth < i.b.x+i.b.div.offsetWidth) i.v.x = -Math.abs(i.v.x) * (1 - elastic_attenuation)
-                if(document.body.offsetHeight < i.b.y+i.b.div.offsetHeight) i.v.y = -Math.abs(i.v.y) * (1 - elastic_attenuation)
+                if(0 > i.b.x){
+                    i.v.x = Math.abs(i.v.x) * (1 - elastic_attenuation);
+                    if(sound_switch.checked)
+                        (new Audio(sound_name)).play();
+                }else if(document.body.offsetWidth < i.b.x+i.b.div.offsetWidth){
+                    i.v.x = -Math.abs(i.v.x) * (1 - elastic_attenuation);
+                    if(sound_switch.checked)
+                        (new Audio(sound_name)).play();
+                }
+                if(0 > i.b.y){
+                    i.v.y = Math.abs(i.v.y) * (1 - elastic_attenuation);
+                    if(sound_switch.checked)
+                        (new Audio(sound_name)).play();
+                }else if(document.body.offsetHeight < i.b.y+i.b.div.offsetHeight){
+                    i.v.y = -Math.abs(i.v.y) * (1 - elastic_attenuation);
+                    if(sound_switch.checked)
+                        (new Audio(sound_name)).play();
+                }
             }
             if(run_status.now == run_status.runing)
                 requestAnimationFrame(run);
