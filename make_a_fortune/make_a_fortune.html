@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>發大財</title>
+    <title>發大財語</title>
     <script src="./script.js"></script>
     <style>
         body{
@@ -26,7 +26,10 @@
     <script>
         var text = document.querySelector('#text');
         function to_human_lan(){
-            decode(text.value).then((str)=>text.value = str);
+            decode(text.value).then((str)=>{
+                if(str)
+                    text.value = str
+            });
         }
         function to_make_a_fortune_lag(){
             encode(text.value).then((code)=>text.value = code);
