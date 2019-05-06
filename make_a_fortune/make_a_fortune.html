@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>發大財</title>
+    <script src="./script.js"></script>
+    <style>
+        body{
+            display: inline-block;
+        }
+        div{
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <div><img src="./hku.jpg" alt=""></div>
+    
+    <div>
+        <button onclick='to_human_lan()'>轉人話</button><button onclick='to_make_a_fortune_lag()'>轉發財語</button>
+        <br>
+        <textarea id="text" cols="30" rows="25">高雄發大財</textarea>
+    </div>
+    <script>
+        var text = document.querySelector('#text');
+        function to_human_lan(){
+            decode(text.value).then((str)=>text.value = str);
+        }
+        function to_make_a_fortune_lag(){
+            encode(text.value).then((code)=>text.value = code);
+        }
+    </script>
+</body>
+</html>
