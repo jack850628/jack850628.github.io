@@ -61,10 +61,10 @@
         彈力衰減值: <input type="text" id="elastic_attenuation">
         <br>
         <br>
-        <input type="checkbox" id="black_mode"><label for="black_mode">黑暗模式</label>
+        黑暗模式: <input type="checkbox" id="black_mode">
         <br>
         <br>
-        <input type="checkbox" id="sound_switch"><label for="sound_switch">撞邊音效</label> 
+        撞邊音效: <input type="checkbox" id="sound_switch">
         <br>
         <br>
         <button id="start">開始</button>
@@ -82,6 +82,8 @@
 
         var sound_switch = document.querySelector('#control_panel #sound_switch')
         var control_panel_show_buttom = document.querySelector('#control_panel #but');
+
+        var unit_volume = 1/(Math.floor(Math.sqrt(Math.pow(parseInt(document.body.offsetWidth),2)+Math.pow(parseInt(document.body.offsetHeight),2)))/3);//用螢幕斜邊的1/3劃分單位音量
 
         document.querySelector('#control_panel #ball_quantity').value = ball_quantity;
         document.querySelector('#control_panel #ball_width').value = ball_width;
@@ -168,27 +170,43 @@
         }
         function run(){
             for(let i of balls){
+                let hit_the_edge = false;
                 i.b.add(i.v);
                 i.v.add(i.a);
 
                 //乘上0.98可以讓球不會越彈越有力
                 if(0 > i.b.x){
                     i.v.x = Math.abs(i.v.x) * (1 - elastic_attenuation);
-                    if(sound_switch.checked)
-                        (new Audio(sound_name)).play();
+                    hit_the_edge = true;
                 }else if(document.body.offsetWidth < i.b.x+i.b.div.offsetWidth){
                     i.v.x = -Math.abs(i.v.x) * (1 - elastic_attenuation);
-                    if(sound_switch.checked)
-                        (new Audio(sound_name)).play();
+                    hit_the_edge = true;
                 }
                 if(0 > i.b.y){
                     i.v.y = Math.abs(i.v.y) * (1 - elastic_attenuation);
-                    if(sound_switch.checked)
-                        (new Audio(sound_name)).play();
+                    hit_the_edge = true;
                 }else if(document.body.offsetHeight < i.b.y+i.b.div.offsetHeight){
                     i.v.y = -Math.abs(i.v.y) * (1 - elastic_attenuation);
-                    if(sound_switch.checked)
-                        (new Audio(sound_name)).play();
+                    hit_the_edge = true;
+                }
+                if(hit_the_edge && sound_switch.checked){
+                    let audio = new Audio(sound_name);
+                    audio.volume = Math.min(
+                        Math.floor(
+                            Math.sqrt(
+                                Math.pow(
+                                    parseInt(
+                                        i.v.x
+                                    ),2
+                                )+Math.pow(
+                                    parseInt(
+                                        i.v.y
+                                    ),2
+                                )
+                            )
+                        )*unit_volume
+                    ,1);//計算音量
+                    audio.play();
                 }
             }
             if(run_status.now == run_status.runing)
