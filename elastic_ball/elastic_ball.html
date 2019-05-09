@@ -83,7 +83,7 @@
         var sound_switch = document.querySelector('#control_panel #sound_switch')
         var control_panel_show_buttom = document.querySelector('#control_panel #but');
 
-        var unit_volume = 1/(Math.floor(Math.sqrt(Math.pow(parseInt(document.body.offsetWidth),2)+Math.pow(parseInt(document.body.offsetHeight),2)))/3);//用螢幕斜邊的1/3劃分單位音量
+        var unit_volume = 1/(Math.floor(Math.sqrt(Math.pow(parseInt(document.body.offsetWidth),2)+Math.pow(parseInt(document.body.offsetHeight),2)))/20);//用螢幕斜邊的1/20劃分單位音量
 
         document.querySelector('#control_panel #ball_quantity').value = ball_quantity;
         document.querySelector('#control_panel #ball_width').value = ball_width;
