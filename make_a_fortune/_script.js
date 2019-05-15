@@ -1,4 +1,7 @@
-var code_pattern = /((?:發大財)+) ((?:發大財)+) ((?:發大財)+) ((?:發大財)+)/;
+/**
+*喵的Microsoft Edge不支援正規表示法的Named Matched Subexpressions
+*/
+var code_pattern = /(?<a>(?:發大財)+) (?<b>(?:發大財)+) (?<c>(?:發大財)+) (?<d>(?:發大財)+)/;//這段在Microsoft Edge會報Unexpected quantifier錯誤
 var make_a_fortune = '發大財';
 
 async function encode(str){
@@ -19,9 +22,11 @@ async function decode(code){
     for(let c of code.split('\n')){
         let char = '';
         let map = c.match(code_pattern);
-        if(map == null || map.length < 2)
+        if(map)
+            map = map.groups;
+        else
             continue;
-        for(let k = 1;k<map.length;k++){
+        for(let k in map){
             if(map[k].match(/^\s$/))
                 continue;
             char += parseInt(map[k].match(new RegExp(make_a_fortune,'g')).length-1).toString(16);
