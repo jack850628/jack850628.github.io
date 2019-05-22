@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="key" value="" placeholder="key"/>
+    <button onclick='to_encode()'>編碼</button><button onclick='to_decode()'>解碼</button>
+    <br/>
+    <textarea id="text" cols="50" rows="25"></textarea>
+    <script>
+        var text = document.querySelector('#text');
+        var ket = document.querySelector('#key');
+        function to_decode(){
+            decode(ket.value, text.value).then((str)=>{
+                    text.value = str
+            });
+        }
+        function to_encode(){
+            encode(ket.value, text.value).then((code)=>text.value = code);
+        }
+
+        async function encode(key,str){
+            str += ' '.repeat(str.length%key.length);
+            arr = str.match(new RegExp(`.{${key.length}}`,'g'));
+            // console.log(`|${str}|`,arr);
+            let code = '';
+            for(let i of key)
+                for(let s of arr)
+                    code += s[i-1];
+            return code;
+        }
+        async function decode(key,str){
+            arr = str.match(new RegExp(`.{${parseInt(str.length/key.length)}}`,'g'));
+            let map = [];
+            for(let i in arr)
+                map[key[i]] = arr[i];
+            let code = '';
+            for(let i = 0;i < map[1].length;i++)
+                for(let k of Array(key.length).keys())
+                    code += map[k+1][i];
+            return code;
+        }
+    </script>
+</body>
+</html>
