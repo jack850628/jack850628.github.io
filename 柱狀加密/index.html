@@ -24,7 +24,8 @@
         }
 
         async function encode(key,str){
-            str += ' '.repeat(str.length%key.length);
+            if(str.length % key.length)
+				str += ' '.repeat(key.length - str.length % key.length);
             arr = str.match(new RegExp(`.{${key.length}}`,'g'));
             // console.log(`|${str}|`,arr);
             let code = '';
