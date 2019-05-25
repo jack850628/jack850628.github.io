@@ -35,7 +35,7 @@
             return code;
         }
         async function decode(key,str){
-            arr = str.match(new RegExp(`.{${parseInt(str.length/key.length)}}`,'g'));
+            arr = str.match(new RegExp(`(.|[\r\n]){${parseInt(str.length/key.length)}}`,'g'));
             let map = [];
             for(let i in arr)
                 map[key[i]] = arr[i];
