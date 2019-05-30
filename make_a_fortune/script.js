@@ -2,7 +2,7 @@ var code_pattern = /((?:發大財)+) ((?:發大財)+) ((?:發大財)+) ((?:發�
 var make_a_fortune = '發大財';
 
 async function encode(str){
-    return await new Promise(resolve => {
+	return await new Promise(resolve => {
 		setTimeout(() => {
 			let code = '';
 			for(let c of str){
