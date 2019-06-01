@@ -67,13 +67,13 @@
             progress.innerText = Math.round(prg);
         }.bind(text);
         function to_human_lan(){
-            wait.style.display = 'block';
+            wait.style.display = 'flex';
             var str = text.value;
             text.value = '';
             decode(str,text.addText).then((status)=>{wait.style.display = 'none';});
         }
         function to_make_a_fortune_lag(){
-            wait.style.display = 'block';
+            wait.style.display = 'flex';
             var str = text.value;
             text.value = '';
             encode(str,text.addText).then((status)=>{wait.style.display = 'none';});
