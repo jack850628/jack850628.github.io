@@ -9,6 +9,7 @@
     <style>
         body{
             display: inline-block;
+            margin: 0px;
         }
         div{
             float: left;
@@ -16,9 +17,22 @@
         #counter{
             display: none;
         }
+        #wait{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #0000009e;
+            color: #FFFFFF;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
+    <div id='wait'>
+        已完成<span id='progress'>0</span>%
+    </div>
     <h3>這個翻譯機可以將人們說的話與韓市長的發大財語互相轉換</h3>
     <div><img src="./hku.jpg" alt=""></div>
     <div>
@@ -46,14 +60,23 @@
     <div id='counter' align=center><a href='https://www.counter12.com'><img src='https://www.counter12.com/img-3wW3946cz638Z1Wy-64.gif' border='0' alt='web counter free'></a><script type='text/javascript' src='https://www.counter12.com/ad.js?id=3wW3946cz638Z1Wy'></script></div>
     <script>
         var text = document.querySelector('#text');
+        var wait = document.querySelector('#wait');
+        var progress = document.querySelector('#progress');
+        text.addText = function(str, prg){
+            this.value += str;
+            progress.innerText = Math.round(prg);
+        }.bind(text);
         function to_human_lan(){
-            decode(text.value).then((str)=>{
-                if(str)
-                    text.value = str
-            });
+            wait.style.display = 'flex';
+            var str = text.value;
+            text.value = '';
+            decode(str,text.addText).then((status)=>{wait.style.display = 'none';});
         }
         function to_make_a_fortune_lag(){
-            encode(text.value).then((code)=>text.value = code);
+            wait.style.display = 'flex';
+            var str = text.value;
+            text.value = '';
+            encode(str,text.addText).then((status)=>{wait.style.display = 'none';});
         }
     </script>
 </body>
