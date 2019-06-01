@@ -1,7 +1,7 @@
 var code_pattern = /((?:發大財)+) ((?:發大財)+) ((?:發大財)+) ((?:發大財)+)/;
 var make_a_fortune = '發大財';
 
-var RETURN = 'complete';
+const RETURN = 'complete';
 /**
  * 將任何字串編碼成發大財語
  * @param string str 要編碼的字串
