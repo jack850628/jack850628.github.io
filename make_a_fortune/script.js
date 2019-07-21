@@ -7,8 +7,8 @@ const RETURN = 'complete';
  * @param string str 要編碼的字串
  * @param function(string,float) getString(編碼好的一個字, 編碼進度)
  */
-async function encode(str,getString){
-	return await new Promise(resolve => {
+function encode(str,getString){
+	return new Promise(resolve => {
 		var index = 0;
 		var progress = 0;
 		var unit = 100 / str.length;
@@ -38,8 +38,8 @@ async function encode(str,getString){
  * @param string code 要解碼的字串
  * @param function(string,float) getString(解碼好的一個字, 編碼進度)
  */
-async function decode(code,getString){
-	return await new Promise(resolve => {
+function decode(code,getString){
+	return new Promise(resolve => {
 		var index = 0;
 		var arr = code.split('\n');
 		var progress = 0;
