@@ -26,7 +26,7 @@ db.transaction(function(tx) {
 tx.executeSql("SELECT * FROM test", [],  
 function(tx, result) {
 for(var i = 0; i < result.rows.length; i  ){ 
-document.write('<b>'   result.rows.item(i)['mytitle']   '</b><br />'); 
+document.write('<b>'  + result.rows.item(i)['mytitle'] +  '</b><br />'); 
 } 
 }, function(){
 alert("error");
