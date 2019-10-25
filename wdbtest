@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>html5-dataBase</title>
+</head>
+<body>
+<script type="text/javascript">
+var db = window.openDatabase("mydata", "1.0","資料庫描述",20000);
+//window.openDatabase("資料庫名字", "版本","資料庫描述",資料庫大小);
+if(db)  
+alert("新建資料庫成功！"); 
+db.transaction(function(tx) {
+tx.executeSql("CREATE TABLE test (id int UNIQUE, mytitle TEXT, timestamp REAL)");
+});
+db.transaction(function(tx) {
+tx.executeSql("INSERT INTO test (mytitle, timestamp) values(?, ?)", ["WEB Database", new Date().getTime()], null, null);
+});
+//db.transaction(function(tx) {
+//  tx.executeSql("DROP TABLE qqs");
+//})
+//db.transaction(function(tx) {
+//  tx.executeSql("update test set mytitle=? where mytitle = 'fsafdsaf'",['xp'],null,null);
+//});
+db.transaction(function(tx) {
+tx.executeSql("SELECT * FROM test", [],  
+function(tx, result) {
+for(var i = 0; i < result.rows.length; i  ){ 
+document.write('<b>'   result.rows.item(i)['mytitle']   '</b><br />'); 
+} 
+}, function(){
+alert("error");
+}); 
+}); 
+</script>
+</body>
+</html>
