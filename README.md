@@ -1,4 +1,5 @@
-# jack850628.github.io
+[![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=jack850628&show_icons=true)](https://github.com/anuraghazra/github-readme-stats)
+
 個人頁面\
 履歷:t:a58t.rredem hsj82ib/oRrgt p/k6guoc/oah  t/c0.hiedcP.l  \
 五子棋:https://jack850628.github.io/webGobang/ \
