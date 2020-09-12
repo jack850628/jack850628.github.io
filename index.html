@@ -8,8 +8,9 @@
         top: 45%;
         left: 50%;
         transform: translateX(-50%);
+        text-align: center;
     }
-    #hello_text{
+    .hello_text{
         color: #ffffff82;
         font-size: 5em;
     }
@@ -18,6 +19,23 @@
     <head>
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <script>
+            window.onload = function(){
+                const urlParams = new URLSearchParams(window.location.search);
+                var query = (urlParams.has('skip_count')) ? '?skip_count=true' : '';
+                console.debug(query);
+                fetch(`https://script.google.com/macros/s/AKfycbz4SCwMO9KbLH9P0NRJuHTw2wUUeYCggzUQk7Q6G-6NFkqTGqo/exec${query}`)
+                    .then((response) => response.json())
+                    .then((json) => {
+                        console.debug(json);
+                        var hello_div = document.querySelector('#hello_div');
+                        hello_div.appendChild(document.createElement('br'));
+
+                        var span = document.createElement('span');
+                        span.innerText = json.count;
+                        span.classList.add('hello_text');
+                        hello_div.appendChild(span);
+                    });
+            };
             (adsbygoogle = window.adsbygoogle || []).push({
                 google_ad_client: "ca-pub-4604853118314154",
                 enable_page_level_ads: true
@@ -26,7 +44,7 @@
     </head>
     <body>
         <div id="hello_div">
-            <span id="hello_text">Hello World!</span>
+            <span class="hello_text">Hello World!</span>
         </div>
     </body>
 </html>
