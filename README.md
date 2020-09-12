@@ -7,5 +7,5 @@
 彈力球:https://jack850628.github.io/elastic_ball/elastic_ball.html \
 發財大語翻譯機:https://jack850628.github.io/make_a_fortune/make_a_fortune.html \
 柱狀加密:https://jack850628.github.io/柱狀加密/ \
-煙火:https://jack850628.github.io/Firework/
-index:https://jack850628.github.io/?skip_count
+煙火:https://jack850628.github.io/Firework/ \
+index:https://jack850628.github.io/
