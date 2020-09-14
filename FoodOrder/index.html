@@ -1,0 +1,140 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的大學專題截圖</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="./silentbox/dist/vue-silentbox.min.js"></script>
+
+    <style>
+        #title{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div id='title'>
+            <h1>通用美食街點系統截圖</h1>
+        </div>
+        <silent-box :gallery="gallery"></silent-box>
+    </div>
+    <script>
+        // Vue.use(VueSilentbox);
+        VueSilentbox.default.install(Vue);
+        new Vue({
+            el: '#app',
+            data: {
+                gallery: [
+                {
+                    src: '../record/FO/1.png',
+                    thumb: '../record/FO/1.png',
+                    description: '顧客端，首頁',
+                    alt: '顧客端，首頁',
+                    thumbnailWidth: '220px',
+                },
+                {
+                    src: '../record/FO/2.png',
+                    thumb: '../record/FO/2.png',
+                    description: '顧客端，瀏覽店家菜單',
+                    alt: '顧客端，瀏覽店家菜單',
+                    thumbnailWidth: '220px',
+                },
+                {
+                    src: '../record/FO/3.png',
+                    thumb: '../record/FO/3.png',
+                    description: '顧客端，購物車',
+                    alt: '顧客端，購物車',
+                    thumbnailWidth: '220px',
+                },
+                {
+                    src: '../record/FO/4.png',
+                    thumb: '../record/FO/4.png',
+                    description: '顧客端，使用Android Apy付款',
+                    alt: '顧客端，使用Android Apy付款',
+                    thumbnailWidth: '220px',
+                },
+                {
+                    src: '../record/FO/5.png',
+                    thumb: '../record/FO/5.png',
+                    description: '顧客結帳完成收到email通知',
+                    alt: '顧客結帳完成收到email通知',
+                    thumbnailWidth: '220px',
+                },
+                {
+                    src: '../record/FO/6.png',
+                    thumb: '../record/FO/6.png',
+                    description: '顧客餐點完成收到email通知',
+                    alt: '顧客餐點完成收到email通知',
+                    thumbnailWidth: '220px',
+                },
+                {
+                    src: '../record/FO/7.png',
+                    thumb: '../record/FO/7.png',
+                    description: '顧客端，首頁的美食街餐點排行榜',
+                    alt: '顧客端，首頁的美食街餐點排行榜',
+                    thumbnailWidth: '220px',
+                },
+                {
+                    src: '../record/FO/8.png',
+                    thumb: '../record/FO/8.png',
+                    description: '顧客端，給予店家評價',
+                    alt: '顧客端，給予店家評價',
+                    thumbnailWidth: '220px',
+                },
+                {
+                    src: '../record/FO/9.png',
+                    thumb: '../record/FO/9.png',
+                    description: '店家端，首頁訂單清單',
+                    alt: '店家端，首頁訂單清單',
+                    thumbnailWidth: '440px',
+                },
+                {
+                    src: '../record/FO/10.png',
+                    thumb: '../record/FO/10.png',
+                    description: '店家端，設定Android Pay',
+                    alt: '店家端，設定Android Pay',
+                    thumbnailWidth: '440px',
+                },
+                {
+                    src: '../record/FO/11.png',
+                    thumb: '../record/FO/11.png',
+                    description: '店家端，編輯菜單',
+                    alt: '店家端，編輯菜單',
+                    thumbnailWidth: '440pxx',
+                },
+                {
+                    src: '../record/FO/12.png',
+                    thumb: '../record/FO/12.png',
+                    description: '店家端，商品銷售統計',
+                    alt: '店家端，商品銷售統計',
+                    thumbnailWidth: '440px',
+                },
+                {
+                    src: '../record/FO/13.png',
+                    thumb: '../record/FO/13.png',
+                    description: '店家端，顧客評價瀏覽',
+                    alt: '店家端，顧客評價瀏覽',
+                    thumbnailWidth: '440px',
+                },
+                {
+                    src: '../record/FO/14.png',
+                    thumb: '../record/FO/14.png',
+                    description: '店家端，顧客取餐成功',
+                    alt: '店家端，顧客取餐成功',
+                    thumbnailWidth: '440px',
+                },
+                {
+                    src: '../record/FO/15.png',
+                    thumb: '../record/FO/15.png',
+                    description: '顧客端，取餐確認',
+                    alt: '顧客端，取餐確認',
+                    thumbnailWidth: '220px',
+                },
+                ]
+            },
+        });
+    </script>
+</body>
+</html>
