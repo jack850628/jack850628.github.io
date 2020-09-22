@@ -67,12 +67,14 @@ const DBName = 'StoryConsole';
                 }
             },
             appebdTextToScreen(text){
+                text = text.toString();
                 this.screenTexts.push(...text.split(/\n/g));
                 if(this.screenTexts.length > this.screenTextLineMax){
                     this.screenTexts.splice(0, this.screenTexts.length - this.screenTextLineMax);
                 }
             },
             appebdTextToScreenlastLine(text){
+                text = text.toString();
                 var lines = text.split(/\n/g)
                 this.screenTexts[this.screenTexts.length - 1] += lines[0];
                 this.screenTexts.push(...lines.slice(1));
@@ -98,7 +100,7 @@ const DBName = 'StoryConsole';
     var db = null;
     async function openDB(storeName){
         var p = new Promise((resolve, reject) => {
-            var openRequest = indexedDB.open(DBName, DB_VERSION);
+            var openRequest = indexedDB.open(storeName, DB_VERSION);
             openRequest.onsuccess = function(event) {
                 var db = event.target.result;
                 console.log('open success');
@@ -126,6 +128,7 @@ const DBName = 'StoryConsole';
             {text: "開始遊戲"},
             {text: "繼續遊戲"},
             {text: "人物介紹"},
+            {text: "載入其他故事"},
             {text: "關於"},
             {text: "結束"},
         ];
@@ -148,6 +151,19 @@ const DBName = 'StoryConsole';
                     await character();
                     break;
                 case 4:
+                    vApp.clearScreen();
+                    vApp.appebdTextToScreen('載入中...');
+                    storyObj = await loadOtherStory();
+                    openDB(storyObj.story.name).then((result) => {
+                        db = result; 
+                    });
+                    setTimeout(() => {
+                        vApp.clearScreen();
+                        main()
+                    });
+                    break exit;
+                    break;
+                case 5:
                     await about();
                     break;
                 default:
@@ -312,6 +328,7 @@ const DBName = 'StoryConsole';
                             else if (gameStatus == GameStatus.CONTINUE)
                             {
                                 gameStatus = GameStatus.RUN;
+                                setTimeout(() => f(resolve, reject));
                             }else setTimeout(() => f(resolve, reject));
                         }
                         else
@@ -571,20 +588,40 @@ const DBName = 'StoryConsole';
         await readLine();
     }
 
-    async function loadStoryFileFromZip(filePath){
-        let zipFile = await new JSZip.external.Promise(function (resolve, reject) {
-            JSZipUtils.getBinaryContent(filePath, function(err, data) {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(data);
-                }
+    async function loadOtherStory(){
+        var f = function(resolve, reject){
+            uploadSdtory.onchange = async function({target: {files: [file]}}){
+                resolve(await loadStoryFileFromZip(file));
+            }
+            uploadSdtory.click();
+            vApp.appebdTextToScreen('若無法繼續，請重新整理網頁');
+        }
+        return new Promise(f);
+    }
+    uploadSdtory.onclick = function(){
+        this.value = null;
+    }
+
+    async function loadStoryFileFromZip(fileOrPath){
+        let zipFile = null;
+        if(typeof(fileOrPath) == 'string'){
+            zipFile = await new JSZip.external.Promise(function (resolve, reject) {
+                JSZipUtils.getBinaryContent(fileOrPath, function(err, data) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(data);
+                    }
+                });
+            }).then(function (data) {
+                return JSZip.loadAsync(data);
             });
-        }).then(function (data) {
-            return JSZip.loadAsync(data);
-        });
+        }else{
+            zipFile = await JSZip.loadAsync(fileOrPath);
+        }
         let storyData = {};
         for(let k in zipFile.files){
+            console.debug(k);
             storyData[k.match(/(.+)?\.json$/)[1]] = JSON.parse(await zipFile.files[k].async('string'));
         }
         return storyData;
