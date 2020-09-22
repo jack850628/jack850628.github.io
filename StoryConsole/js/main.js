@@ -1,7 +1,11 @@
+const VERSION = "1.0.0922";
+const DB_VERSION = 1;
+// const SAVE_DIR = "/save";
+// const STORY_DIR = "/story";
+const defaultStory = './story/放學回家啦！.zip';
+const DBName = 'StoryConsole';
+
 (function (){
-    const VERSION = "1.1.0915";
-    const SAVE_DIR = "/save";
-    const STORY_DIR = "/story";
     var floorsLine = [];
 
     var GameStatus = {
@@ -14,6 +18,8 @@
     }
 
     var enterDown = false;
+
+    var storyObj = null
     var SC = null;
 
     var vApp = new Vue({
@@ -79,6 +85,9 @@
                 this.input = '';
                 this.appebdTextToScreen(text);
                 return text;
+            },
+            clearScreen(){
+                this.screenTexts.splice(0);
             }
         },
         updated(){
@@ -86,9 +95,33 @@
         }
     });
 
+    var db = null;
+    async function openDB(storeName){
+        var p = new Promise((resolve, reject) => {
+            var openRequest = indexedDB.open(DBName, DB_VERSION);
+            openRequest.onsuccess = function(event) {
+                var db = event.target.result;
+                console.log('open success');
+                resolve(db);
+            };
+
+            openRequest.onerror = function(event) {
+                console.error(event.target.errorCode);
+            };
+            openRequest.onupgradeneeded = function(event){
+                var db = event.target.result;
+                console.log('open upgradeneeded');
+                if(!db.objectStoreNames.contains(storeName))
+                    db.createObjectStore(storeName, { keyPath: "id" });
+            }
+        });
+        return p;
+    }
+
+
 
     async function main(){
-        var storyTitle = {name: '   test title   '};//JsonConvert.DeserializeObject<Story>(File.ReadAllText(Directory.GetCurrentDirectory() + STORY_DIR + @"\story.json"));
+        var storyTitle = storyObj.story;
         var option = [
             {text: "開始遊戲"},
             {text: "繼續遊戲"},
@@ -101,22 +134,21 @@
             switch (await select("     " + storyTitle.name + "               ", option))
             {
                 case 1:
-                    let globalVariable = testglobalVariable;//JsonConvert.DeserializeObject<Variable[]>(File.ReadAllText(Directory.GetCurrentDirectory() + STORY_DIR + @"\globalVariable.json"));
-                    await load(storyTitle.startFrom, globalVariable);
+                    await load(storyTitle.startFrom, storyObj.globalVariable);
                     break;
                 case 2:
-                    // var saveFile = LoadSave();
-                    // if (saveFile != null)
-                    // {
-                    //     floorsLine.AddRange(saveFile.floorsLine);
-                    //     Load(saveFile.stoeyName, saveFile.globalVariable);
-                    // }
+                    let saveFile = await loadSave();
+                    if (saveFile)
+                    {
+                        floorsLine = saveFile.floorsLine;
+                        await load(saveFile.stoeyName, saveFile.globalVariable);
+                    }
                     break;
                 case 3:
-                    // Character();
+                    await character();
                     break;
                 case 4:
-                    // About();
+                    await about();
                     break;
                 default:
                     break exit;
@@ -126,12 +158,15 @@
     }
 
     function load(nextStoryName, globalVariable){
-        SC = globalVariable;
+        SC = {};
+        for(let v of globalVariable){
+            SC[v.name] = v.value;
+        }
 
         gameStatus = GameStatus.RUN;
         let f = async function(resolve, reject){
             if(gameStatus != GameStatus.STOP){
-                let commands = testStory;
+                let commands = storyObj[nextStoryName];
                 nextStoryName = await runStory(commands, nextStoryName, 0);
 
                 if (!nextStoryName)
@@ -321,7 +356,7 @@
                             resolve();
                             break;
                         }else if (selected == 2){ 
-                            // Save(storyName);
+                            await save(storyName);
                             resolve();
                             break;
                         }else if (selected == 3){
@@ -358,6 +393,108 @@
         return new Promise(f);
     }
 
+    async function save(storyName){
+        if(!db){
+            vApp.appebdTextToScreen('您使用的瀏覽器不支援存檔');
+            await readLine();
+            return;
+        }
+
+        var option = [
+            {text: "記錄檔1"},
+            {text: "記錄檔2"},
+            {text: "記錄檔3"},
+            {text: "記錄檔4"},
+            {text: "記錄檔5"},
+            {text: "返回"},
+        ];
+        var fileItem = await select("    選擇記錄檔       ", option);
+        if (fileItem == 6) return;
+
+        let globalVariable = [];
+        for(let k in SC){
+            let type;
+            switch(typeof(SC[k])){
+                case 'object':
+                    type = (SC[k] instanceof Array) ? 'array' : 'object';
+                    break;
+                default:
+                    type = typeof(SC[k]);
+                    break;
+            }
+            globalVariable.push({
+                name: k,
+                type: type,
+                value: SC[k]
+            });
+        }
+
+        var objectStore  = db.transaction([storyObj.story.name], 'readwrite').objectStore(storyObj.story.name);
+
+        objectStore.delete(fileItem);
+        objectStore.add({
+            id: fileItem,
+            stoeyName: storyName,
+            floorsLine: floorsLine,
+            globalVariable: globalVariable
+        });
+
+        option = [
+            {text: "繼續遊戲"},
+            {text: "離開遊戲"},
+        ];
+        switch (await select("請問您現在要?     ", option))
+        {
+            case 1:
+                return;
+            default:
+                gameStatus = GameStatus.STOP;
+                return;
+        }
+    }
+
+    async function loadSave(){
+        if(!db){
+            vApp.appebdTextToScreen('您使用的瀏覽器不支援存檔');
+            await readLine();
+            return;
+        }
+
+        var f = async function(resolve, reject){
+            var option = [
+                {text: "記錄檔1"},
+                {text: "記錄檔2"},
+                {text: "記錄檔3"},
+                {text: "記錄檔4"},
+                {text: "記錄檔5"},
+                {text: "返回"},
+            ];
+            var fileItem = await select("    選擇記錄檔       ", option);
+            if (fileItem == 6){
+                resolve(null);
+                return;
+            }
+
+            var objectStore  = db.transaction([storyObj.story.name]).objectStore(storyObj.story.name);
+
+            var request = objectStore.get(fileItem);
+            request.onerror = function(event) {
+                vApp.appebdTextToScreen('沒有紀錄！');
+                setTimeout(()=>f(resolve, reject));
+            };
+            request.onsuccess = async function(event) {
+                if(request.result)
+                    resolve(request.result);
+                else{
+                    vApp.appebdTextToScreen('沒有紀錄！');
+                    await readLine()
+                    setTimeout(()=>f(resolve, reject));
+                }
+            };
+        }
+        return new Promise(f);
+    }
+
     async function select(title, option, useJsOption = false){
         vApp.appebdTextToScreen(useJsOption ? eval(title) : title);
         vApp.appebdTextToScreen('-'.repeat(title.length));
@@ -382,363 +519,92 @@
         return new Promise(f);
     }
 
-    setTimeout(main);
+    async function readLine(){
+        var f = function(resolve, reject){
+            if(enterDown){
+                enterDown = false;
+                resolve(vApp.inputText())
+            }else
+                setTimeout(()=>f(resolve, reject));
+        }
+        return new Promise(f);
+    } 
+
+    async function character()
+    {
+        var option = [];
+        for (let  i of storyObj.character)
+        {
+            option.push({ text: i.name });
+        }
+        option.push({ text: "反回" });
+        var f = async function(resolve, reject)
+        {
+            let selected = await select("    人物介紹      ", option);
+            if (1 <= selected && selected < option.length)
+            {
+                vApp.appebdTextToScreen("--------------------------------------");
+                vApp.appebdTextToScreen("             " + storyObj.character[selected - 1].name);
+                vApp.appebdTextToScreen(storyObj.character[selected - 1].detailed);
+                vApp.appebdTextToScreen("--------------------------------------");
+                await readLine();
+            }
+            else if (selected == option.length)
+            {
+                resolve();
+                return;
+            }
+            setTimeout(()=>f(resolve, reject));
+        }
+        return new Promise(f);
+    }
+
+    async function about()
+    {
+        vApp.appebdTextToScreen("                    關於");
+        vApp.appebdTextToScreen("-------------------------------------------");
+        vApp.appebdTextToScreen("         StoryConsole Web Version");
+        vApp.appebdTextToScreen("這是一套作者作好玩的Console文字冒險遊戲框架");
+        vApp.appebdTextToScreen("作者：jack850628");
+        vApp.appebdTextToScreen("版本：" + VERSION);
+        vApp.appebdTextToScreen("-------------------------------------------");
+        await readLine();
+    }
+
+    async function loadStoryFileFromZip(filePath){
+        let zipFile = await new JSZip.external.Promise(function (resolve, reject) {
+            JSZipUtils.getBinaryContent(filePath, function(err, data) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        }).then(function (data) {
+            return JSZip.loadAsync(data);
+        });
+        let storyData = {};
+        for(let k in zipFile.files){
+            storyData[k.match(/(.+)?\.json$/)[1]] = JSON.parse(await zipFile.files[k].async('string'));
+        }
+        return storyData;
+    }
+
+    vApp.appebdTextToScreen('載入中...');
+    loadStoryFileFromZip(defaultStory).then(async (storyData) => {
+        storyObj = storyData;
+        // console.log(storyObj);
+
+        openDB(storyData.story.name).then((result) => {
+            db = result; 
+        });
+
+        vApp.clearScreen();
+        main();
+    }).catch((e) => {
+        console.error(e);
+        vApp.clearScreen();
+        vApp.appebdTextToScreen('發生錯誤！遊戲已終止，請重新整理網頁');
+    });
 })()
 
-var testglobalVariable = {
-    momey: 5,
-    肥宅重: 106
-}
-var testStory = [
-	{
-		"show": "'有一天，主角在放學回家的路上'"
-	},
-	{
-		"show": "'主角：「這是什麼？」'"
-	},
-	{
-		"show": "'主角在地上發現了十元'"
-	},
-	{
-		"show": "'主角：「哦！哦！哦！是十塊錢！」'"
-	},
-	{
-		"select": {
-			"title": "'     該怎麼做？        '",
-			"option": [
-				{
-					"text": "'撿起來！'",
-					"then": [
-						{
-							"exec": "SC.momey += 10"
-						},
-						{
-							"show": "'主角：「朝爽Der～撿到十塊錢哩～....雷！」'"
-						}
-					]
-				},
-				{
-					"text": "'還要彎下去，好累ㄛ'",
-					"then": [
-						{
-							"show": "'主角：「這點小錢本大爺才不削拿」'"
-						},
-						{
-							"show": "'其實是太胖了，灣不太下去'"
-						},
-						{
-							"sleep": 3
-						},
-						{
-							"show": "'主角：「啊！被撿走了」'"
-						},
-						{
-							"show": "'主角：「可惡！還是想撿...」'"
-						}
-					]
-				},
-			]
-		}
-	},
-	{
-		"show": "'主角現在身上還有' + SC.momey + '元'"
-	},
-	{
-		"show": "'接著，肥宅...痾不對！是主角，繼續往家的方向走'"
-	},
-	{
-		"show": "'...'"
-	},
-	{
-		"show": "'..'"
-	},
-	{
-		"show": "'.'"
-	},
-	{
-		"show": "'主角：「走了這麼遠了，口好渴喔」'"
-	},
-	{
-		"show": "'...其實只走了一百多公尺'"
-	},
-	{
-		"show": "'主角：「嘿！嘿！嘿！有台販賣機ㄟ」'"
-	},
-	{
-		"exec": "SC.沒買 = true"
-	},
-	{
-		"while": "SC.沒買",
-		"then":[
-			{
-				"select": {
-					"title": "'              該怎麼做？              '",
-					"option": [
-						{
-							"text": "'買！買！買！我想喝快樂水！'",
-							"then": [
-								{
-									"exec": "SC.沒買 = false"
-								},
-								{
-									"show": "'主角：「太棒了！快給我快樂水！」'"
-								},
-								{
-									"if": "SC.momey >= 29",
-									"then": [
-										{
-											"show": "'主角：「寶特瓶裝的要29元」'"
-										},
-										{
-											"show": "'主角：「身上有'+ SC.momey +'元，夠！買！」'"
-										},
-										{
-											"show": "'-投幣-'"
-										},
-										{
-											"show": "'-快樂水掉下來-'"
-										},
-										{
-											"show": "'-拿起-'"
-										},
-										{
-											"show": "'-大喝一口-'"
-										},
-										{
-											"show": "'主角：「哈～努力過後就是應該要喝快樂水啦！」'"
-										},
-										{
-											"show": "'主角：「爽！！！」'"
-										},
-										{
-											"exec": "SC.momey -= 29"
-										},
-									]
-								},
-								{
-									"elseif": "SC.momey >= 15",
-									"then": [
-										{
-											"show": "'主角：「寶特瓶裝的要29元」'"
-										},
-										{
-											"show": "'主角：「身上有'+ SC.momey +'元...」'"
-										},
-										{
-											"show": "'主角：「ㄇㄉ！只夠買鋁罐裝的...」'"
-										},
-										{
-											"show": "'主角：「快樂水就是應該要喝瓶裝的才過癮啊！！！」'"
-										},
-										{
-											"show": "'主角：「...」'"
-										},
-										{
-											"show": "'主角：「...叫太大聲了，旁邊的人都在看了」'"
-										},
-										{
-											"show": "'-投幣-'"
-										},
-										{
-											"show": "'-快樂水掉下來-'"
-										},
-										{
-											"show": "'-拿起-'"
-										},
-										{
-											"show": "'-大喝一口-'"
-										},
-										{
-											"show": "'主角：「哈～努力過後就是應該要喝快樂水啦！」'"
-										},
-										{
-											"show": "'主角：「爽！」'"
-										},
-										{
-											"exec": "SC.momey -= 15"
-										},
-									]
-								},
-								{
-									"else": [
-										{
-											"show": "'主角：「身上只有'+ SC.momey +'元...」'"
-										},
-										{
-											"show": "'主角：「尬拎良啦！這樣是要怎麼買快樂水啦！」'"
-										},
-										{
-											"show": "'主角：「這樣豈不是要去喝尿了嗎？！！！」'"
-										},
-										{
-											"show": "'主角：「吼！氣！氣！氣！氣！氣！」'"
-										},
-										{
-											"show": "'主角：「...」'"
-										},
-										{
-											"show": "'主角：「算了！狗才喝快樂水，喝尿去吧！」'"
-										},
-										{
-											"show": "'主角：「...」'"
-										},
-										{
-											"show": "'主角：「不對！！狗才喝尿啦！」'"
-										},
-										{
-											"show": "'主角：「淦！」'"
-										},
-										{
-											"show": "'主角：「...」'"
-										},
-									]
-								}
-							]
-						},
-						{
-							"text": "'...離販賣機還有點距離，懶得走過去'",
-							"then": [
-								{
-									"show": "'主角：「走得越久，快樂水就會越好喝」'"
-								},
-								{
-									"show": "'主角：「現在的快樂水一定還不夠讓我快樂！」'"
-								},
-								{
-									"show": "'...'"
-								},
-								{
-									"show": "'..'"
-								},
-								{
-									"show": "'.'"
-								},
-								{
-									"show": "'主角：「可是我還是想喝快樂水...」'"
-								}
-							]
-						},
-					]
-				}
-			}
-		]
-	},
-	{
-		"show": "'主角現在身上還有' + SC.momey + '元'"
-	},
-	{
-		"show": "'主角繼續往家的方向前進'"
-	},
-	{
-		"show": "'主角走了一段距離後經過了商店街'"
-	},
-	{
-		"show": "'這時，主角發現自己喜歡的班花 小美'"
-	},
-	{
-		"show": "'主角：「哇～是小美ㄟ，什麼時候看到，都一樣是那麼的好看，那麼的正！」'"
-	},
-	{
-		"show": "'主角：「嘿！嘿！嘿！嘿！嘿！嘿！」'"
-	},
-	{
-		"show": "'主角一副噁宅樣子，滴著口水，望著小美的方向看去'"
-	},
-	{
-		"show": "'主角：「嗯？」'"
-	},
-	{
-		"show": "'...'"
-	},
-	{
-		"show": "'這時，主角發現自己喜歡的小美正在被一位男子搭話'"
-	},
-	{
-		"show": "'男子：「美女～我看妳好像很有空，要不要一起去個好玩的地方啊？」'"
-	},
-	{
-		"show": "'小美一臉很困擾的表情'"
-	},
-	{
-		"show": "'小美：「...謝謝，不用，我並不有空，我在等人」'"
-	},
-	{
-		"show": "'男子：「別這麼說嘛～一起去啦～」'"
-	},
-	{
-		"show": "'小美：「...」'"
-	},
-	{
-		"show": "'主角：「那個男人是誰？在幹嘛？跟小美是什麼關西？」'"
-	},
-	{
-		"show": "'主角：「那男的一頭像刺蝟的金髮，穿著吊嘎，手上還有刺青」'"
-	},
-	{
-		"show": "'主角：「難道說.....」'"
-	},
-	{
-		"show": "'主角：「小美正在被騷擾！」'"
-	},
-	{
-		"show": "'是的，她正在被騷擾'"
-	},
-	{
-		"show": "'主角：「...可是看小美的表情，跟平常跟我講話時是同一個表情啊」'"
-	},
-	{
-		"show": "'主角：「真的是在被騷擾嗎？」'"
-	},
-	{
-		"show": "'主角：「...」'"
-	},
-	{
-		"show": "'主角：「算了！那男的一看就不是什麼好東西！」'"
-	},
-	{
-		"show": "'主角：「趕快想點辦法幫助小美吧！」'"
-	},
-	{
-		"while": "true",
-		"then": [
-			{
-				"select": {
-					"title": "'       該怎麼做？       '",
-					"option": [
-						{
-							"text": "'衝上前，胖揍他一頓'",
-							"then": [
-								{
-									"show": "'主角：「好！揍他！給他一頓粗飽！」'"
-								},
-								{
-									"show": "'主角：「...」'"
-								},
-								{
-									"show": "'主角：「不對，他看起來好像很屌」'"
-								},
-								{
-									"show": "'主角：「搞不好吃粗飽的就會是我」'"
-								},
-								{
-									"show": "'主角：「...」'"
-								},
-							]
-						},
-						{
-							"text": "'拿東西丟砸他，把他砸跑'",
-							"then": [
-								{
-									"show": "'主角：「比起近戰，我還是比較適合遠攻」'"
-								},
-								{
-									"goto": ""
-								}
-							]
-						}
-					]
-				}
-			}
-		]
-	}
-]

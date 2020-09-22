@@ -5,6 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>StoryConsole</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="./js/jszip-utils.min.js"></script>
+    <script src="./js/jszip.min.js"></script>
 
     <style>
         body{
@@ -21,15 +23,17 @@
             background-color: black;
             color: white;
             flex: 1;
-            font-size: 2em;
+            font-size: 1.3em;
             overflow-y: scroll;
         }
         #buttons{
             display: flex;
+            flex-wrap: wrap;
         }
         .btn{
             flex: 1;
             height: 50px;
+            min-width: 50px;
             margin: 0px 2px 0px 2px;
         }
         .keep-spaces { 
