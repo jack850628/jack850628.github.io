@@ -3,7 +3,7 @@ const DB_VERSION = 1;
 // const SAVE_DIR = "/save";
 // const STORY_DIR = "/story";
 const defaultStory = './story/放學回家啦！.zip';
-const DBName = 'StoryConsole';
+// const DBName = 'StoryConsole';
 
 (function (){
     var floorsLine = [];
