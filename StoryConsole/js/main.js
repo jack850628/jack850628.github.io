@@ -170,33 +170,30 @@ const defaultStory = './story/放學回家啦！.zip';
                     break exit;
             }
         }
+        vApp.clearScreen();
 		vApp.appebdTextToScreen('已經停止運行，請重新整理或關閉網頁');
     }
 
-    function load(nextStoryName, globalVariable){
+    async function load(nextStoryName, globalVariable){
         SC = {};
         for(let v of globalVariable){
             SC[v.name] = v.value;
         }
 
         gameStatus = GameStatus.RUN;
-        let f = async function(resolve, reject){
-            if(gameStatus != GameStatus.STOP){
-                let commands = storyObj[nextStoryName];
-                nextStoryName = await runStory(commands, nextStoryName, 0);
+        while(gameStatus != GameStatus.STOP){
+            let commands = storyObj[nextStoryName];
+            nextStoryName = await runStory(commands, nextStoryName, 0);
 
-                if (!nextStoryName)
-                {
-                    gameStatus = GameStatus.STOP;
-                }
-                else if(gameStatus == GameStatus.GOTO)
-                {
-                    gameStatus = GameStatus.RUN;
-                }
-                setTimeout(() => f(resolve, reject));
-            }else resolve();
+            if (!nextStoryName)
+            {
+                gameStatus = GameStatus.STOP;
+            }
+            else if(gameStatus == GameStatus.GOTO)
+            {
+                gameStatus = GameStatus.RUN;
+            }
         }
-        return new Promise(f);
     }
 
     async function runStory(commands, storyName, floor){
@@ -312,33 +309,30 @@ const defaultStory = './story/放學回家啦！.zip';
                 }
                 else if (command.while != undefined)
                 {
-                    let f = async function(resolve, reject) {
+                    while(true)
+                    {
                         if (floor < floorsLine.length - 1 || eval(command.while))
                         {
                             var result = await runStory(command.then, storyName, floor + 1);
                             if (gameStatus == GameStatus.BREAK)
                             {
                                 gameStatus = GameStatus.RUN;
-                                resolve();
+                                break;
                             }
                             else if (gameStatus == GameStatus.STOP || gameStatus == GameStatus.GOTO)
                             {
-                                resolve(result);
+                                return result;
                             }
                             else if (gameStatus == GameStatus.CONTINUE)
                             {
                                 gameStatus = GameStatus.RUN;
-                                setTimeout(() => f(resolve, reject));
-                            }else setTimeout(() => f(resolve, reject));
+                            }
                         }
                         else
                         {
-                            resolve();
+                            break;
                         }
                     }
-                    let result = await new Promise(f);
-                    if (gameStatus == GameStatus.STOP || gameStatus == GameStatus.GOTO)
-                        return result;
                 }
             }
             return null;
@@ -555,8 +549,7 @@ const defaultStory = './story/放學回家啦！.zip';
             option.push({ text: i.name });
         }
         option.push({ text: "反回" });
-        var f = async function(resolve, reject)
-        {
+        while(true){
             let selected = await select("    人物介紹      ", option);
             if (1 <= selected && selected < option.length)
             {
@@ -568,12 +561,9 @@ const defaultStory = './story/放學回家啦！.zip';
             }
             else if (selected == option.length)
             {
-                resolve();
                 return;
             }
-            setTimeout(()=>f(resolve, reject));
         }
-        return new Promise(f);
     }
 
     async function about()
