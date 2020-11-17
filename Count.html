@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<style>
+    html{
+        background-color: black;
+        width: 100%;
+        height: 100%;
+    }
+    body{
+        margin: 0px;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .hello_text{
+        color: #ffffff82;
+        font-size: 5em;
+    }
+    .s3{
+        font-size: 3em;
+    }
+    .button{
+        cursor: pointer;
+        padding: 5px 20px;
+        border: 1px;
+        border-style: groove;
+        border-radius: 13px;
+    }
+</style>
+<html>
+    <head>
+        <title>計數器</title>
+        <script src="https://unpkg.com/vue@3.0.2/dist/vue.global.js"></script>
+        <script>
+            window.onload = function(){
+                Vue.createApp({
+                    data(){
+                        return {
+                            count: 0
+                        };
+                    },
+                    methods: {
+                        add(){
+                            this.count++;
+                        }
+                    }
+                }).mount('#app');
+            };
+        </script>
+    </head>
+    <body id = 'app'>
+        <span class="hello_text">{{count}}</span>
+        <span class="hello_text s3 button" @click="add">+</span>
+    </body>
+</html>
