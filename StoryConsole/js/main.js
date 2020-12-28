@@ -140,6 +140,11 @@ const defaultStory = './story/放學回家啦！.zip';
                     await load(storyTitle.startFrom, storyObj.globalVariable);
                     break;
                 case 2:
+                    if(window.tryPlayData){
+                        vApp.appebdTextToScreen('測試模式不提供存檔');
+                        await readLine()
+                        break;
+                    }
                     let saveFile = await loadSave();
                     if (saveFile)
                     {
@@ -367,9 +372,14 @@ const defaultStory = './story/放學回家啦！.zip';
                             resolve();
                             break;
                         }else if (selected == 2){ 
-                            await save(storyName);
-                            resolve();
-                            break;
+                            if(window.tryPlayData){
+                                vApp.appebdTextToScreen('測試模式不提供存檔');
+                                await readLine()
+                            }else{
+                                await save(storyName);
+                                resolve();
+                                break;
+                            }
                         }else if (selected == 3){
                             gameStatus = GameStatus.STOP;
                             resolve();
@@ -593,26 +603,31 @@ const defaultStory = './story/放學回家啦！.zip';
     }
 
     async function loadStoryFileFromZip(fileOrPath){
-        let zipFile = null;
-        if(typeof(fileOrPath) == 'string'){
-            zipFile = await new JSZip.external.Promise(function (resolve, reject) {
-                JSZipUtils.getBinaryContent(fileOrPath, function(err, data) {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(data);
-                    }
+        var storyData = null;
+        if(!window.tryPlayData){
+            let zipFile = null;
+            if(typeof(fileOrPath) == 'string'){
+                zipFile = await new JSZip.external.Promise(function (resolve, reject) {
+                    JSZipUtils.getBinaryContent(fileOrPath, function(err, data) {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(data);
+                        }
+                    });
+                }).then(function (data) {
+                    return JSZip.loadAsync(data);
                 });
-            }).then(function (data) {
-                return JSZip.loadAsync(data);
-            });
+            }else{
+                zipFile = await JSZip.loadAsync(fileOrPath);
+            }
+            storyData = {};
+            for(let k in zipFile.files){
+                console.debug(k);
+                storyData[k.match(/(.+)?\.json$/)[1]] = JSON.parse(await zipFile.files[k].async('string'));
+            }
         }else{
-            zipFile = await JSZip.loadAsync(fileOrPath);
-        }
-        let storyData = {};
-        for(let k in zipFile.files){
-            console.debug(k);
-            storyData[k.match(/(.+)?\.json$/)[1]] = JSON.parse(await zipFile.files[k].async('string'));
+            storyData = window.tryPlayData;
         }
         return storyData;
     }
@@ -621,10 +636,11 @@ const defaultStory = './story/放學回家啦！.zip';
     loadStoryFileFromZip(defaultStory).then(async (storyData) => {
         storyObj = storyData;
         // console.log(storyObj);
-
-        openDB(storyData.story.name).then((result) => {
-            db = result; 
-        });
+        if(!window.tryPlayData){
+            openDB(storyData.story.name).then((result) => {
+                db = result; 
+            });
+        }
 
         vApp.clearScreen();
         main();
