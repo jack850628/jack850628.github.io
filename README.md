@@ -8,5 +8,6 @@
 發財大語翻譯機:https://jack850628.github.io/make_a_fortune/make_a_fortune.html \
 柱狀加密:https://jack850628.github.io/柱狀加密/ \
 煙火:https://jack850628.github.io/Firework/ \
-StoryConsole Console文字冒險遊戲框架 網頁版:https://jack850628.github.io/StoryConsole/ \
+StoryConsole Console文字冒險遊戲框架 網頁版:https://jack850628.github.io/StoryConsoleEditor/StoryConsole/ \
+StoryConsoleEditor Console文字冒險遊戲的故事編輯器:https://jack850628.github.io/StoryConsoleEditor/ \
 index:https://jack850628.github.io/
