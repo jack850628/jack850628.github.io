@@ -43,7 +43,7 @@
 </head>
 <body>
     <div id = 'app'>
-        <div id = 'consoleScreen' class = 'keep-spaces'>
+        <div id = 'consoleScreen' class = 'keep-spaces' tabindex = '0' @keyup = 'keyboardInput'>
             <div v-for = 'text in screenTexts'>
                 <span v-if = 'text'>{{text}}</span>
                 <br v-else/>

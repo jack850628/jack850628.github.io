@@ -55,11 +55,18 @@ const defaultStory = './story/放學回家啦！.zip';
         //     }
         // },
         methods: {
+            keyboardInput({key}){
+                if(key.match(/\d/)){
+                    this.input += key;
+                }else if(key == 'Enter'){
+                    enterDown = true;
+                }else if(key == 'Backspace'){
+                    this.input = this.input.substr(0, this.input.length - 1);
+                }
+            },
             buttonClick({target: {innerText: text}}){
                 if(text == '\u232B'){
-                    if(text.length > 0){
-                        this.input = this.input.substr(0, this.input.length - 1);
-                    }
+                    this.input = this.input.substr(0, this.input.length - 1);
                 }else if(text == '\u23CE'){
                     enterDown = true;
                 }else{
@@ -633,7 +640,8 @@ const defaultStory = './story/放學回家啦！.zip';
     }
 
     vApp.appebdTextToScreen('載入中...');
-    loadStoryFileFromZip(defaultStory).then(async (storyData) => {
+    let story = new URLSearchParams(location.search).get('story') || defaultStory;
+    loadStoryFileFromZip(story).then(async (storyData) => {
         storyObj = storyData;
         // console.log(storyObj);
         if(!window.tryPlayData){
