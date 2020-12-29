@@ -145,12 +145,22 @@
                     <blocks :b-code.sync="codeTree" :mouseout="mouseOut" :mouseover="mouseOver" :mouseup="mouseUp" :mousemove="mouseMove" :mousedown="mouseDown" :context-menu-items="contextMenuItems" :context-menu-item-click="contextMenuItemClick" @mousemove="scrollTriggerY" @mouseleave="scrollTriggerYEnd" style="overflow-y: auto;"></blocks>
                     <div style="width: 150px; display: flex; flex-direction: column;">
                         <div style="display: flex;">
-                            <v-btn icon color="deep-orange" @click="save">
-                                <v-icon color="#FFFFFF">mdi-content-save</v-icon>
-                            </v-btn>
-                            <v-btn icon color="deep-orange" @click="debug">
-                                <v-icon color="#FFFFFF">mdi-bug</v-icon>
-                            </v-btn>
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-btn icon @click="save" v-bind="attrs" v-on="on">
+                                        <v-icon color="#FFFFFF">mdi-content-save</v-icon>
+                                    </v-btn>
+                                </template>
+                                <span>儲存</span>
+                            </v-tooltip>
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-btn icon @click="save" v-bind="attrs" v-on="on" style="display: none;">
+                                        <v-icon color="#FFFFFF">mdi-bug</v-icon>
+                                    </v-btn>
+                                </template>
+                                <span>除錯</span>
+                            </v-tooltip>
                         </div>
                         <span>暫存區</span>
                         <blocks :allow-type="[TYPE.CODE_BLOCK, TYPE.VAR_BLOCK, TYPE.LIFT_VAR_BLOCK, TYPE.SELECT_OPTION]" :b-code.sync="tempCodeTree" :mouseout="mouseOut" :mouseover="mouseOver" :mouseup="mouseUp" :mousemove="mouseMove" :mousedown="mouseDown" :context-menu-items="contextMenuItems" :context-menu-item-click="contextMenuItemClick" @mousemove="scrollTriggerY" @mouseleave="scrollTriggerYEnd" style="overflow-y: auto;"></blocks>

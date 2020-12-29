@@ -32,6 +32,12 @@
             flex: 1;
         }
     </style>
+    <script>
+        window.onbeforeunload=function(e){  
+        　　var e = window.event || e; 
+        　　e.returnValue = "確定離開嗎？";
+        } 
+    </script>
 </head>
 <body>
     <div id="app">
