@@ -61,9 +61,11 @@
                         audio.play();
                     },
                     playButton(){
-                        this.playing = true;
-                        this.playIndex = 0;
-                        this.play(this.audioPlayQueue[this.playIndex++].url);
+                        if(this.audioPlayQueue.length > 0){
+                            this.playing = true;
+                            this.playIndex = 0;
+                            this.play(this.audioPlayQueue[this.playIndex++].url);
+                        }
                     },
                     stopButton(){
                         this.playing = false;
@@ -144,6 +146,10 @@
                             大濕之音 v1.0
                             <br/>
                             作者：jack850628
+                            <br/>
+                            聲音來源：
+                            <a href="https://www.twitch.tv/h804232006" target="_bloak">仙界大濕</a>
+                            <a href="https://www.twitch.tv/magicgadra3" target="_bloak">嘎抓</a>
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
