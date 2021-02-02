@@ -67,6 +67,7 @@
                     },
                     stopButton(){
                         this.playing = false;
+                        this.playIndex = -1;
                         audio.pause();
                     },
                     removeQueueItem(index){
