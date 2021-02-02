@@ -1,0 +1,162 @@
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Console Editor</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <style>
+        html, body, #app{
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+            background-color: #272727;
+            color: #FFFFFF;
+        }
+        .button{
+            margin: 2px;
+        }
+        .play-item{
+            background-color: orange !important;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="./audios.js"></script>
+    <script>
+        window.onload = function(){
+            new Vue({
+                el: '#app',
+                vuetify: new Vuetify(),
+                components: {
+                    vuedraggable,
+                },
+                data: {
+                    audios: audios,
+                    about: false,
+                    timeoutId: null,
+                    playing: false,
+                    playIndex: -1,
+                    audioPlayQueue: [
+
+                    ],
+                    searchString: '',
+                },
+                methods: {
+                    audioStop(){
+                        if(this.playing && this.playIndex < this.audioPlayQueue.length){
+                            this.play(this.audioPlayQueue[this.playIndex++].url);
+                        }else{
+                            this.playing = false;
+                            this.playIndex = -1;
+                        }
+                    },
+                    play(url){
+                        audio.src = `https://www.myinstants.com${url}`;
+                        audio.play();
+                    },
+                    playButton(){
+                        this.playing = true;
+                        this.playIndex = 0;
+                        this.play(this.audioPlayQueue[this.playIndex++].url);
+                    },
+                    stopButton(){
+                        this.playing = false;
+                        audio.pause();
+                    },
+                    removeQueueItem(index){
+                        this.audioPlayQueue.splice(index, 1);
+                    },
+                    preview(audioData){
+                        if(this.timeoutId == null){
+                            this.timeoutId = setTimeout(() => {
+                                this.timeoutId = null;
+                                this.play(audioData.url);
+                            }, 500);
+                        }else{
+                            clearTimeout(this.timeoutId);
+                            this.timeoutId = null;
+                            this.audioPlayQueue.push(audioData);
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <v-app>
+            <v-app-bar color="#666666" dark app>
+                <v-toolbar-title>大濕之音</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn icon @click="about = true" v-bind="attrs" v-on="on">
+                            <v-icon>mdi-information-outline</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>關於</span>
+                </v-tooltip>
+            </v-app-bar>
+            <v-main>
+                <audio id="audio" @ended="audioStop"></audio>
+                <p>提示：拖曳可以排序，點一下可以移除。</p>
+                <draggable v-model="audioPlayQueue" style="margin-top: 15px; margin-bottom: 15px;">
+                    <v-btn dark elevation="3" v-for="(item, k) in audioPlayQueue" :key="k" :class="['button', (k == playIndex - 1)? 'play-item' : '']" @click="removeQueueItem(k)">{{item.name}}</v-btn>
+                 </draggable>
+                 <div style="margin-bottom: 15px;">
+                    <v-btn dark elevation="3" @click="playButton">
+                        <v-icon>mdi-play</v-icon>
+                        <span>播放</span>
+                    </v-btn>
+                    <v-btn dark elevation="3" @click="stopButton">
+                        <v-icon>mdi-stop</v-icon>
+                        <span>停止</span>
+                    </v-btn>
+                 </div>
+
+                 <v-text-field dark v-model="searchString" label="搜尋"></v-text-field>
+                <p>提示：點一下可以預覽，點兩下可以加入至播放序列。</p>
+                <v-expansion-panels dark focusable>
+                    <template v-for="(items, groupName) in audios">
+                        <v-expansion-panel>
+                            <v-expansion-panel-header>{{groupName}}</v-expansion-panel-header>
+                            <v-expansion-panel-content>
+                                <v-btn elevation="3" class="button" v-for="(item, k) in items" :key="k" @click="preview(item)" v-show="!searchString | item.name.indexOf(searchString) != -1">{{item.name}}</v-btn>
+                            </v-expansion-panel-content>
+                        </v-expansion-panel>
+                    </template>
+                </v-expansion-panels>
+
+                <v-dialog v-model="about" max-width="500px">
+                    <v-card>
+                        <v-card-title>
+                            關於
+                        </v-card-title>
+                        <v-card-text>
+                            大濕之音 v1.0
+                            <br/>
+                            作者：jack850628
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="primary" text  @click="about = false">
+                                關閉
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </v-main>
+          
+            <!-- <v-footer app>
+            </v-footer> -->
+        </v-app>
+    </div>
+</body>
+</html>
