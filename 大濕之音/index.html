@@ -18,8 +18,9 @@
         .button{
             margin: 2px;
         }
-        .play-item{
+        .play-item.v-btn.v-btn--disabled.v-btn--has-bg{
             background-color: orange !important;
+            color: white !important;
         }
     </style>
 
@@ -29,8 +30,10 @@
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
     <script src="./audios.js"></script>
     <script>
+        const SEARCH_PARAMS_1 = 'queue';
         window.onload = function(){
-            new Vue({
+            var searchParams = new URLSearchParams(location.search);
+            var app = new Vue({
                 el: '#app',
                 vuetify: new Vuetify(),
                 components: {
@@ -46,6 +49,9 @@
 
                     ],
                     searchString: '',
+
+                    share: false,
+                    shareLink: '',
                 },
                 methods: {
                     audioStop(){
@@ -72,6 +78,13 @@
                         this.playIndex = -1;
                         audio.pause();
                     },
+                    clearButton(){
+                        this.audioPlayQueue.splice(0, this.audioPlayQueue.length);
+                    },
+                    shareButton(){
+                        this.shareLink = `${location.origin}${location.pathname}?${SEARCH_PARAMS_1}=${JSON.stringify(this.audioPlayQueue.map(i => i.id))}`;
+                        this.share = true;
+                    },
                     removeQueueItem(index){
                         this.audioPlayQueue.splice(index, 1);
                     },
@@ -86,9 +99,18 @@
                             this.timeoutId = null;
                             this.audioPlayQueue.push(audioData);
                         }
+                    },
+                    copyLink(){
+                        shareLink.select();
+                        document.execCommand("copy");
                     }
                 }
             });
+            if(searchParams.get(SEARCH_PARAMS_1)){
+                let array = JSON.parse(searchParams.get(SEARCH_PARAMS_1));
+                let audioList = audios.flatMap(i => i.datas);
+                app.$data.audioPlayQueue = array.map(id => audioList.find(i => i.id == id));
+            }
         }
     </script>
 </head>
@@ -111,7 +133,7 @@
                 <audio id="audio" @ended="audioStop"></audio>
                 <p>提示：拖曳可以排序，點一下可以移除。</p>
                 <draggable v-model="audioPlayQueue" style="margin-top: 15px; margin-bottom: 15px;">
-                    <v-btn dark elevation="3" v-for="(item, k) in audioPlayQueue" :key="k" :class="['button', (k == playIndex - 1)? 'play-item' : '']" @click="removeQueueItem(k)">{{item.name}}</v-btn>
+                    <v-btn dark elevation="3" v-for="(item, k) in audioPlayQueue" :key="k" :class="['button', (k == playIndex - 1)? 'play-item' : '']" @click="removeQueueItem(k)" :disabled="playing">{{item.name}}</v-btn>
                  </draggable>
                  <div style="margin-bottom: 15px;">
                     <v-btn dark elevation="3" @click="playButton">
@@ -122,20 +144,48 @@
                         <v-icon>mdi-stop</v-icon>
                         <span>停止</span>
                     </v-btn>
+                    <v-btn dark elevation="3" @click="clearButton" :disabled="playing">
+                        <v-icon>mdi-delete</v-icon>
+                        <span>清空</span>
+                    </v-btn>
+                    <v-btn dark elevation="3" @click="shareButton">
+                        <v-icon>mdi-share</v-icon>
+                        <span>分享</span>
+                    </v-btn>
                  </div>
 
-                 <v-text-field dark v-model="searchString" label="搜尋"></v-text-field>
+                <v-text-field dark v-model="searchString" label="搜尋"></v-text-field>
                 <p>提示：點一下可以預覽，點兩下可以加入至播放序列。</p>
                 <v-expansion-panels dark focusable>
-                    <template v-for="(items, groupName) in audios">
+                    <template v-for="audioGroup in audios">
                         <v-expansion-panel>
-                            <v-expansion-panel-header>{{groupName}}</v-expansion-panel-header>
+                            <v-expansion-panel-header>{{audioGroup.name}}</v-expansion-panel-header>
                             <v-expansion-panel-content>
-                                <v-btn elevation="3" class="button" v-for="(item, k) in items" :key="k" @click="preview(item)" v-show="!searchString | item.name.indexOf(searchString) != -1">{{item.name}}</v-btn>
+                                <v-btn elevation="3" class="button" v-for="(item, k) in audioGroup.datas" :key="k" @click="preview(item)" v-show="!searchString | item.name.indexOf(searchString) != -1">{{item.name}}</v-btn>
                             </v-expansion-panel-content>
                         </v-expansion-panel>
                     </template>
                 </v-expansion-panels>
+
+                <v-dialog v-model="share" max-width="500px">
+                    <v-card>
+                        <v-card-title>
+                            分享
+                        </v-card-title>
+
+                        <v-text-field id="shareLink" v-model="shareLink" label="分享連結"></v-text-field>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn text @click="copyLink">
+                                <v-icon>mdi-content-copy</v-icon>
+                                <span>複製</span>
+                            </v-btn>
+                            <v-btn color="primary" text  @click="share = false">
+                                關閉
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
 
                 <v-dialog v-model="about" max-width="500px">
                     <v-card>
