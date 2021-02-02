@@ -82,7 +82,7 @@
                         this.audioPlayQueue.splice(0, this.audioPlayQueue.length);
                     },
                     shareButton(){
-                        this.shareLink = `${location.origin}${location.pathname}?${SEARCH_PARAMS_1}=${JSON.stringify(this.audioPlayQueue.map(i => i.id))}`;
+                        this.shareLink = `${location.origin}${location.pathname}?${SEARCH_PARAMS_1}=${btoa(JSON.stringify(this.audioPlayQueue.map(i => i.id)))}`;
                         this.share = true;
                     },
                     removeQueueItem(index){
@@ -107,7 +107,7 @@
                 }
             });
             if(searchParams.get(SEARCH_PARAMS_1)){
-                let array = JSON.parse(searchParams.get(SEARCH_PARAMS_1));
+                let array = JSON.parse(atob(searchParams.get(SEARCH_PARAMS_1)));
                 let audioList = audios.flatMap(i => i.datas);
                 app.$data.audioPlayQueue = array.map(id => audioList.find(i => i.id == id));
             }
