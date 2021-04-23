@@ -47,5 +47,6 @@ var stamps = [
     "https://jack850628.github.io/wet-elephant-sound/soundImage.html?q=WzI5NF0=&i=Wtu9WEo.png.png&s=",
     "https://jack850628.github.io/wet-elephant-sound/soundImage.html?q=WzEyMTld&i=uVjn30O.jpg.png&s=",
     "https://jack850628.github.io/wet-elephant-sound/soundImage.html?q=WzE0OTNd&i=noG2XZQ.png.png&s=",
-    "https://jack850628.github.io/wet-elephant-sound/soundImage.html?q=WzEyMTld&i=Du7sZFa.png.png&s="
+    "https://jack850628.github.io/wet-elephant-sound/soundImage.html?q=WzEyMTld&i=Du7sZFa.png.png&s=",
+    "https://jack850628.github.io/wet-elephant-sound/soundImage.html?q=WzEyODgsMTk3XQ==&i=SzolQa8.png&s="
 ]
