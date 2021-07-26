@@ -10,6 +10,6 @@
 煙火:https://jack850628.github.io/Firework/ \
 StoryConsole Console文字冒險遊戲框架 網頁版:https://jack850628.github.io/StoryConsoleEditor/StoryConsole/ \
 StoryConsoleEditor Console文字冒險遊戲的故事編輯器:https://jack850628.github.io/StoryConsoleEditor/ \
-大濕之音:https://jack850628.github.io/%E5%A4%A7%E6%BF%95%E4%B9%8B%E9%9F%B3/ \
+大濕之音:https://jack850628.github.io/wet-elephant-sound/ \
 跳躍吧！元元！ :https://jack850628.github.io/wet-elephant-jump/ \
 index:https://jack850628.github.io/
