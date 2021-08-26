@@ -1,0 +1,55 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html, body{
+            margin: 0px;
+        }
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        button{
+            width: 600px;
+            height: 600px;
+            background-image: url('1.png');
+        }
+        button.active{
+            width: 600px;
+            height: 600px;
+            background-image: url('2.png');
+        }
+    </style>
+</head>
+<body>
+    <button></button>
+    <script>
+        (function(){
+            var down = false;
+            var button = document.querySelector('button');
+            var audio = new Audio();
+            var dowm = function(e){
+                if(!down){
+                    down = true;
+                    audio.src = 'https://www.myinstants.com/media/sounds/.mp3_k42Ebs9';
+                    audio.play();
+                    button.classList.add('active');
+                }
+            };
+            var up = function(e){
+                down = false;
+                audio.pause()
+                button.classList.remove('active');
+            };
+            document.addEventListener("keydown", dowm);
+            document.addEventListener("keyup", up);
+
+            document.addEventListener("pointerdown", dowm);
+            document.addEventListener("pointerup", up);
+            })();
+    </script>
+</body>
+</html>
