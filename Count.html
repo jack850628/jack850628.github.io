@@ -45,9 +45,12 @@
                         };
                     },
                     methods: {
-                        add(){
+                        add(e){
                             this.count++;
                         }
+                    },
+                    mounted(){
+                        document.addEventListener('keypress', this.add);
                     }
                 }).mount('#app');
             };
