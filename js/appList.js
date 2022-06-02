@@ -45,7 +45,7 @@ const appList = [
         icon: './拉進來打出去/icon.jpg',
         introduce: `拉進來打出去，體驗韓總驚險刺激的辛酸奮鬥過程！
 
-非常抱歉沒有在遊戲裡加入說明道具影響到各位發大財ㄑ(_ _)ゝ，因此在下次更新之前就先把道具說明放在這裡
+非常抱歉沒有在遊戲裡加入說明道具影響到各位發大財ㄑ(_ _)ゝ，因此把道具說明放在這裡
 正面道具:
 中天新聞:
 第一關:+1000粉絲
@@ -233,7 +233,7 @@ const appList = [
         name: '大濕之音 wet elephant sound',
         subStr: '臭臭語音大集合',
         icon: 'https://raw.githubusercontent.com/jack850628/wet-elephant-sound/main/images/%E5%85%86%E5%85%83192.png',
-        introduce: `當大濕在沉迷於L4D2、時數還沒告急、懶癌發作然後不開台，想念她那臭臭的聲音嗎？
+        introduce: `當大濕在沉迷於L4D2、時數還沒告急、懶癌發作然後不開台，想念他那臭臭的聲音嗎？
 來這邊就對了！
 
 這裡有非常齊全的大濕語音以及組合，在沒有聽到大濕的聲音造成精神不濟時，點一下按鈕，保證你臭一臭神清氣爽！
@@ -320,7 +320,7 @@ const appList = [
         name: 'AShell',
         subStr: 'AShell腳本語言',
         icon: 'https://raw.githubusercontent.com/jack850628/AShell/master/AShell_LOGO3.png',
-        introduce: `這是我在大一時，自學java語言時做的腳本語言，在製作這門的過程中，我也深深的幫助到我學java語言的語法與特性。
+        introduce: `這是我在大一時，自學java語言時做的腳本語言，在製作這門的過程中，也深深的幫助到我學java語言的語法與特性。
         
 不過因為這是我還在菜的時候做的東西，所以現在回去看裡頭的原始碼寫還挺亂的，除非哪天我心血來潮，否則因該是不會再去更新AShell了。`,
         images: [
@@ -361,7 +361,7 @@ const appList = [
         name: '彈力球',
         subStr: '用Javascript做的看起來像是螢幕保護程式的網頁',
         icon: '',
-        introduce: `用Javascript做的看起來像是螢幕保護程式的網頁`,
+        introduce: `用Javascript做的看起來像是螢幕保護程式的網頁。`,
         images: [],
         links: [
             {
