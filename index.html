@@ -1,50 +1,198 @@
 <!DOCTYPE html>
-<style>
-    html{
-        background-color: black;
-    }
-    #hello_div{
-        position: absolute;
-        top: 45%;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-    }
-    .hello_text{
-        color: #ffffff82;
-        font-size: 5em;
-    }
-</style>
 <html>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <title>jack850628的頁面</title>
+    <style>
+        /* html{
+            background-color: black;
+        }
+        #hello_div{
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+        .hello_text{
+            color: #ffffff82;
+            font-size: 5em;
+        } */
+
+        .app-title{
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #4e4e4e;
+        }
+        .app-dialog-title{
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #4e4e4e;
+        }
+        .app-item{
+            display: flex; 
+            padding: 5px;
+            user-select: none; 
+            cursor: pointer;
+            margin: 3px 0px;
+        }
+    </style>
     <head>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script src="./js/appList.js"></script>
         <script>
             window.onload = function(){
-                const urlParams = new URLSearchParams(window.location.search);
-                var query = (urlParams.has('skip_count')) ? '?skip_count=true' : '';
-                console.debug(query);
-                fetch(`https://script.google.com/macros/s/AKfycbz4SCwMO9KbLH9P0NRJuHTw2wUUeYCggzUQk7Q6G-6NFkqTGqo/exec${query}`)
-                    .then((response) => response.json())
-                    .then((json) => {
-                        console.debug(json);
-                        var hello_div = document.querySelector('#hello_div');
-                        hello_div.appendChild(document.createElement('br'));
+                // const urlParams = new URLSearchParams(window.location.search);
+                // var query = (urlParams.has('skip_count')) ? '?skip_count=true' : '';
+                // console.debug(query);
+                // fetch(`https://script.google.com/macros/s/AKfycbz4SCwMO9KbLH9P0NRJuHTw2wUUeYCggzUQk7Q6G-6NFkqTGqo/exec${query}`)
+                //     .then((response) => response.json())
+                //     .then((json) => {
+                //         console.debug(json);
+                //         var hello_div = document.querySelector('#hello_div');
+                //         hello_div.appendChild(document.createElement('br'));
 
-                        var span = document.createElement('span');
-                        span.innerText = json.count;
-                        span.classList.add('hello_text');
-                        hello_div.appendChild(span);
-                    });
+                //         var span = document.createElement('span');
+                //         span.innerText = json.count;
+                //         span.classList.add('hello_text');
+                //         hello_div.appendChild(span);
+                //     });
+                new Vue({
+                    el: '#app',
+                    vuetify: new Vuetify(),
+                    data: {
+                        LINK_TYPE,
+                        appList,
+
+                        appName: '',
+                        appIcon: '',
+                        appIntroduce: '',
+                        appImages: [],
+                        appLinks: [],
+                        isShowApp: false,
+                    },
+                    methods: {
+                        appItemClick(i){
+                            this.appIcon = this.appList[i].icon;
+                            this.appName = this.appList[i].name;
+                            this.appIntroduce = this.appList[i].introduce;
+                            this.appImages = this.appList[i].images;
+                            this.appLinks = this.appList[i].links;
+                            this.isShowApp = true;
+                        }
+                    }
+                });
             };
-            (adsbygoogle = window.adsbygoogle || []).push({
-                google_ad_client: "ca-pub-4604853118314154",
-                enable_page_level_ads: true
-            });
+            // (adsbygoogle = window.adsbygoogle || []).push({
+            //     google_ad_client: "ca-pub-4604853118314154",
+            //     enable_page_level_ads: true
+            // });
         </script>
     </head>
     <body>
-        <div id="hello_div">
+        <!-- <div id="hello_div">
             <span class="hello_text">Hello World!</span>
+        </div> -->
+        <div id="app">
+            <v-app>
+                <!-- <v-navigation-drawer app>
+                </v-navigation-drawer> -->
+    
+                <v-app-bar app fixed dark shrink-on-scroll src="./images/嘎嘎吃吃.jpg">
+                    <template v-slot:img="{ props }">
+                        <v-img
+                            v-bind="props"
+                            gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
+                        ></v-img>
+                    </template>
+    
+                    <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
+    
+                    <v-app-bar-title>jack850628的頁面</v-app-bar-title>
+
+                    <v-spacer></v-spacer>
+
+                    <!-- <v-btn icon>
+                        <v-icon>mdi-magnify</v-icon>
+                    </v-btn> -->
+                </v-app-bar>
+    
+                <v-main>
+                    <v-container fluid>
+                        <v-avatar color="primary" size="93">
+                            <img src="./images/嘎嘎.jpg" alt="嘎嘎">
+                        </v-avatar>
+                        曾經，有隻鸚鵡說過『嘎嘎嘎嘎嘎』。
+                    </v-container>
+                    <v-container fluid>
+                        歡迎來到jack850628的頁面，這裡放有我製作的網頁以及app的連結，有興趣的話可以往下繼續瀏覽。
+                        <br>
+                        <a href="https://twitter.com/2023cdaf978844e">我的twitter</a>
+                        <br>
+                        <a href="https://home.gamer.com.tw/homeindex.php?owner=jack850628">我的巴哈</a>
+                        <br>
+                        <a href="https://github.com/jack850628">我的Github</a>
+                    </v-container>
+                    <v-container fluid>
+                        <v-card elevation="5" v-for="(app, k) in appList" :key="k" class="app-item" @click="appItemClick(k)">
+                            <v-avatar size="70" style="flex: 0;">
+                                <img :src="app.icon" alt="app圖示">
+                            </v-avatar>
+                            <div style="flex: 1; text-align: center; margin: auto;">
+                                <div>
+                                    <span class="app-title">{{app.name}}</span>
+                                </div>
+                                <div>
+                                    <span>{{app.subStr}}</span>
+                                </div>
+                            </div>
+                        </v-card>
+                    </v-container>
+                    <!-- <iframe src="https://jack850628.github.io/Firework/" frameborder="0" style="height: 100px; width: 100%;"></iframe> -->
+                </v-main>
+                <v-footer app>
+                </v-footer>
+
+                <v-dialog v-model="isShowApp">
+                    <v-card>
+                        <v-card-title class="text-h5">
+                            <v-avatar size="70" style="margin-right: 10px;">
+                                <img :src="appIcon" alt="app圖示">
+                            </v-avatar>
+                            <span class="app-dialog-title">{{appName}}</span>
+                        </v-card-title>
+
+                        <v-carousel v-show="appImages.length">
+                            <v-carousel-item 
+                                v-for="(item, i) in appImages"
+                                :key="i"
+                            >
+                                <v-img :src="item" max-height="500" contain></v-img>
+                            </v-carousel-item>
+                        </v-carousel>
+
+                        <span style="white-space: pre-wrap;">{{appIntroduce}}</span>
+
+                        <div v-for="(link, i) in appLinks">
+                            <a :href="link.link" target='_blank'>
+                                {{link.name || link.type}}
+                            </a>
+                        </div>
+
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn text color="green darken-1" @click="isShowApp = false">
+                                關閉
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </v-app>
         </div>
     </body>
 </html>
