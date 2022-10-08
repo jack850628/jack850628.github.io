@@ -230,6 +230,30 @@ const appList = [
         ]
     },
     {
+        name: 'Anime風格線搞自動上色',
+        subStr: '',
+        icon: '',
+        introduce: `這是基於類神經網路pix2pix模型實現的Anime風格線搞自動上色。`,
+        images: [],
+        links: [
+            {
+                type: LINK_TYPE.WEB,
+                name: '',
+                link: 'https://jack850628.github.io/LineArtAutomaticColoring/',
+            },
+            {
+                type: LINK_TYPE.WEB,
+                name: '網頁端 Github',
+                link: 'https://github.com/jack850628/LineArtAutomaticColoring',
+            },
+            {
+                type: LINK_TYPE.WEB,
+                name: '伺服器端 Github',
+                link: 'https://github.com/jack850628/LineArtAutomaticColoring-Server',
+            }
+        ]
+    },
+    {
         name: '大濕之音 wet elephant sound',
         subStr: '臭臭語音大集合',
         icon: 'https://raw.githubusercontent.com/jack850628/wet-elephant-sound/main/images/%E5%85%86%E5%85%83192.png',
@@ -250,6 +274,25 @@ const appList = [
                 type: LINK_TYPE.WEB,
                 name: 'Github',
                 link: 'https://github.com/jack850628/wet-elephant-sound',
+            }
+        ]
+    },
+    {
+        name: '大濕之音2 wet elephant sound 2',
+        subStr: '基於Tacotron TTS的大濕之音',
+        icon: 'https://raw.githubusercontent.com/jack850628/wet-elephant-sound/main/images/%E5%85%86%E5%85%83192.png',
+        introduce: `這個目前還在測試階段，效果還不是很好。`,
+        images: [],
+        links: [
+            {
+                type: LINK_TYPE.WEB,
+                name: '',
+                link: 'https://wes2.jack.origthatone.com/',
+            },
+            {
+                type: LINK_TYPE.WEB,
+                name: 'Github',
+                link: 'https://github.com/jack850628/wet-elephant-sound2',
             }
         ]
     },
