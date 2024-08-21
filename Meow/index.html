@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>喵喵喵翻譯機</title>
+    <script src="./script.js"></script>
+    <style>
+        body{
+            display: inline-block;
+            margin: 0px;
+        }
+        div{
+            float: left;
+        }
+        #counter{
+            display: none;
+        }
+        #wait{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: #0000009e;
+            color: #FFFFFF;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div id='wait'>
+        已完成<span id='progress'>0</span>%
+    </div>
+    <h3>這個翻譯機可以將人們說的話與喵喵喵互相轉換</h3>
+    <div><img src="./hku.jpg" alt=""></div>
+    <div>
+        <button onclick='to_make_a_fortune_lag()'>喵喵語</button><button onclick='to_human_lan()'>轉人話</button><span>👈🏼按下按鈕看看德里蒙說了什麼</span>
+        <br>
+        <textarea id="text" cols="50" rows="25">
+喵喵喵喵喵喵，喵喵喵喵喵喵，喵喵喵喵喵喵喵喵喵喵喵喵，喵喵喵喵喵喵。
+喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵，喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵，喵喵喵喵喵喵，喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵。
+喵喵喵喵喵喵喵，喵喵喵，喵喵，喵喵。
+喵喵喵喵喵喵喵喵喵，喵喵喵喵喵喵喵喵喵喵，喵喵喵喵喵喵喵喵喵，喵喵。
+喵喵喵喵喵喵喵喵，喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵，喵喵喵喵喵喵，喵。
+喵喵喵喵喵喵喵喵，喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵，喵喵喵喵喵喵，喵。
+喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵，喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵，喵，喵喵。
+        </textarea>
+    </div>
+    <div id='counter' align=center>
+        <a href='https://www.counter12.com'>
+            <img src='https://www.counter12.com/img-3wW3946cz638Z1Wy-64.gif' border='0' alt='web counter free'>
+        </a>
+        <!-- <script type='text/javascript' src='https://www.counter12.com/ad.js?id=3wW3946cz638Z1Wy'></script> -->
+    </div>
+    <script>
+        var text = document.querySelector('#text');
+        var wait = document.querySelector('#wait');
+        var progress = document.querySelector('#progress');
+        text.addText = function(str, prg){
+            this.value += str;
+            progress.innerText = Math.round(prg);
+        }.bind(text);
+        function to_human_lan(){
+            wait.style.display = 'flex';
+            var str = text.value;
+            text.value = '';
+            decode(str,text.addText).then((status)=>{wait.style.display = 'none';});
+        }
+        function to_make_a_fortune_lag(){
+            wait.style.display = 'flex';
+            var str = text.value;
+            text.value = '';
+            encode(str,text.addText).then((status)=>{wait.style.display = 'none';});
+        }
+    </script>
+</body>
+</html>
