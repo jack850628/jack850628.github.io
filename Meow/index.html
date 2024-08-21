@@ -34,9 +34,9 @@
         已完成<span id='progress'>0</span>%
     </div>
     <h3>這個翻譯機可以將人們說的話與喵喵喵互相轉換</h3>
-    <div><img src="./hku.jpg" alt=""></div>
+    <div><img src="./rdrrmew.jpg" alt=""></div>
     <div>
-        <button onclick='to_make_a_fortune_lag()'>喵喵語</button><button onclick='to_human_lan()'>轉人話</button><span>👈🏼按下按鈕看看德里蒙說了什麼</span>
+        <button onclick='to_meow_lag()'>喵喵語</button><button onclick='to_human_lan()'>轉人話</button><span>👈🏼按下按鈕看看德里蒙說了什麼</span>
         <br>
         <textarea id="text" cols="50" rows="25">
 喵喵喵喵喵喵，喵喵喵喵喵喵，喵喵喵喵喵喵喵喵喵喵喵喵，喵喵喵喵喵喵。
@@ -68,7 +68,7 @@
             text.value = '';
             decode(str,text.addText).then((status)=>{wait.style.display = 'none';});
         }
-        function to_make_a_fortune_lag(){
+        function to_meow_lag(){
             wait.style.display = 'flex';
             var str = text.value;
             text.value = '';
